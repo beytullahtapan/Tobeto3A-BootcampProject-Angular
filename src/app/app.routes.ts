@@ -1,10 +1,15 @@
 import { Routes } from '@angular/router';
-import { HomepageComponent } from './pages/homepage/homepage.component';
+import { HomePageComponent } from './pages/home-page/home-page.component';
 import { LoginComponent } from './pages/login/login.component';
+import { RegisterComponent } from './pages/register/register.component';
 
-
-export const routes: Routes = [
-    {path:'',redirectTo:'homepage',pathMatch:'full'},
-    {path:'homepage',component:HomepageComponent},
-    {path:'login',component:LoginComponent}
+export const routes: Routes = 
+[
+   
+   {path:'',redirectTo:'',pathMatch:'full'},
+   {path:"",component:HomePageComponent,children:[]},
+   {path:'',redirectTo:'login',pathMatch:'full'},
+   {path:"login",component:LoginComponent,children:[]},
+   {path:'',redirectTo:'register',pathMatch:'full'},
+   {path:"register",component:RegisterComponent,children:[]}
 ];

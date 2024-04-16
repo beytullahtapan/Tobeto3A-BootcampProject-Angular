@@ -14,16 +14,16 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have the 'BootcampProjectAngular' title`, () => {
+  it(`should have the 'Tobeto3A-BootcampProject-Angular' title`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('BootcampProjectAngular');
+    expect(app.title).toEqual('Tobeto3A-BootcampProject-Angular');
   });
 
   it('should render title', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('h1')?.textContent).toContain('Hello, BootcampProjectAngular');
+    expect(compiled.querySelector('h1')?.textContent).toContain('Hello, Tobeto3A-BootcampProject-Angular');
   });
 });

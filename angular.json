@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "BootcampProjectAngular": {
+    "Tobeto3A-BootcampProject-Angular": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/bootcamp-project-angular",
+            "outputPath": "dist/tobeto3-a-bootcamp-project-angular",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [
@@ -62,10 +62,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "BootcampProjectAngular:build:production"
+              "buildTarget": "Tobeto3A-BootcampProject-Angular:build:production"
             },
             "development": {
-              "buildTarget": "BootcampProjectAngular:build:development"
+              "buildTarget": "Tobeto3A-BootcampProject-Angular:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -73,7 +73,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "buildTarget": "BootcampProjectAngular:build"
+            "buildTarget": "Tobeto3A-BootcampProject-Angular:build"
           }
         },
         "test": {
