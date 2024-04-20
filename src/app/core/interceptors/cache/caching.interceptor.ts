@@ -1,31 +1,27 @@
-import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpResponse } from "@angular/common/http";
+import { HttpEvent, HttpHandler, HttpInterceptor, HttpInterceptorFn, HttpRequest, HttpResponse } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable, filter, of, tap } from "rxjs";
 
-@Injectable()
-export class CachingInterceptor implements HttpInterceptor{
-  private cache: Map<string, HttpResponse<any>> =new Map();
+export const CachingInterceptors:HttpInterceptorFn=(req,next)=>{
+  const cache: Map<string, HttpResponse<any>> =new Map();
 
-  intercept(request:HttpRequest<any>,next:HttpHandler):Observable<HttpEvent<any>>{
-
-    const isCachable=request.method=='GET';
+    const isCachable=req.method=='GET';
     
     if(!isCachable){
-      return next.handle(request);
+      return next(req);
     }
-    const cacheKey=request.urlWithParams;
-    const cachedResponse=this.cache.get(cacheKey);
+    const cacheKey=req.urlWithParams;
+    const cachedResponse=cache.get(cacheKey);
     
     if(cachedResponse) {
       return of(cachedResponse);
   }
-  return next.handle(request).pipe(
+  return next(req).pipe(
     filter((event:HttpEvent<any>)=>event instanceof HttpResponse && event.status==200),
     tap((event:HttpEvent<any>)=>{
       if (event instanceof HttpResponse){
-      this.cache.set(cacheKey,event)
+      cache.set(cacheKey,event)
       }
      })
    );
-  }
 }
