@@ -20,6 +20,10 @@ export class LoginComponent implements OnInit{
 
   ngOnInit(): void {
     this.createLoginForm();
+    if(this.authService.loggedIn()){
+      alert("You are already logged in.");
+      this.router.navigate(['/']);
+    }
   }
 
   createLoginForm(){
@@ -33,8 +37,7 @@ export class LoginComponent implements OnInit{
     if(this.loginForm.valid){
       let loginModel:UserForLoginRequest = Object.assign({},this.loginForm.value);
       this.authService.login(loginModel).subscribe(response=>{
-        alert(response.accessToken.expiration);
-        console.log(response.accessToken.token + " " + response.accessToken.expiration);
+        //alert(response.accessToken.expiration);
         this.router.navigate(['/'])
       },(error:any)=>{
         alert(error.error)
