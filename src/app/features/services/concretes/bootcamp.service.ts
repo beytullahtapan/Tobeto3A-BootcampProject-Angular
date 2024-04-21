@@ -4,13 +4,13 @@ import { Observable, map } from 'rxjs';
 import { PageRequest } from '../../../core/models/page-request';
 import { BootcampListDto } from '../../models/responses/bootcamp/bootcamp-list-item-dto';
 import { HttpClient } from '@angular/common/http';
-import { environment } from '../../../../enviroments/environment.development';
+import { environment } from '../../../../environments/environment.development';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BootcampService extends BootcampBaseService {
-  private readonly apiUrl:string = `${environment.API_URL}/cars`
+  private readonly apiUrl:string = `${environment.API_URL}/Bootcamps`
   constructor(private httpClient:HttpClient) {super() }
 
   override getList(pageRequest: PageRequest): Observable<BootcampListDto> {

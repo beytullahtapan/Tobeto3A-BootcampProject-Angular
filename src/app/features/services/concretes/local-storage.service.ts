@@ -15,11 +15,9 @@ export class LocalStorageService {
     localStorage.removeItem(key);
   }
 
-  get(key:string)
-  {
+  get(key:string){
    return localStorage.getItem(key);
   }
-
 
   setToken(token:string){
     localStorage.setItem("token",token);

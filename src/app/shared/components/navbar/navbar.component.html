@@ -33,7 +33,11 @@
 			</li>
 			<li><a class="text-sm text-gray-600 hover:text-gray-900" routerLink="/Contact">Contact</a></li>
 		</ul>
-		<a class="hidden lg:inline-block py-2 px-6 bg-blue-500 hover:bg-blue-600 text-sm text-white font-bold rounded-xl transition duration-200" routerLink="/login">Giriş / Üye Ol</a>
+		<div [ngSwitch]="userLogged">
+			<a *ngSwitchCase="false" class="hidden lg:inline-block py-2 px-6 bg-blue-500 hover:bg-blue-600 text-sm text-white font-bold rounded-xl transition duration-200 cursor-pointer" routerLink="/login">Giriş / Üye Ol</a>
+			<a *ngSwitchCase="true" (click)="logOut()" class="hidden lg:inline-block py-2 px-6 bg-blue-500 hover:bg-blue-600 text-sm text-white font-bold rounded-xl transition duration-200 cursor-pointer">Logout</a>
+		</div>
+
 	</nav>
 	<div class="navbar-menu relative z-50 hidden">
 		<div class="navbar-backdrop fixed inset-0 bg-gray-800 opacity-25"></div>
