@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Router} from '@angular/router';
+import { Router, RouterModule} from '@angular/router';
 import { AuthService } from '../../features/services/concretes/auth.service';
 import { UserForLoginRequest } from '../../features/models/requests/users/user-login-request';
 
@@ -8,7 +8,7 @@ import { UserForLoginRequest } from '../../features/models/requests/users/user-l
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule,RouterModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })

@@ -37,7 +37,7 @@ export class AuthService extends AuthBaseService {
   }
 
   override register(userForRegisterRequest: UserForRegisterRequest): Observable<AccessTokenModel<TokenModel>> {
-    return this.httpClient.post<AccessTokenModel<TokenModel>>(`${this.apiUrl}/Register`,userForRegisterRequest);
+    return this.httpClient.post<AccessTokenModel<TokenModel>>(`${this.apiUrl}/RegisterApplicant`,userForRegisterRequest);
   }
 
 
