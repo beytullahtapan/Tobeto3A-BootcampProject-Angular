@@ -8,7 +8,7 @@ import { HttpClientModule } from '@angular/common/http';
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [RouterModule,HttpClientModule],
+  imports: [RouterModule,HttpClientModule, CommonModule],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.scss'
 })
@@ -16,13 +16,14 @@ export class NavbarComponent implements OnInit{
   userLogged!:boolean;
   constructor(private authService:AuthService,private router:Router){}
    ngOnInit(): void {
-     console.log(this.getUserName());
-     console.log(this.getUserId())
+    this.setUserLogged();
+    //console.log(this.getUserName());
+    //console.log(this.getUserId());
    }
 
    logOut(){
     this.authService.logOut();
-    this.router.navigate(['home-page'])
+    //this.router.navigate(['/'])
    }
    
    setUserLogged() :boolean{
