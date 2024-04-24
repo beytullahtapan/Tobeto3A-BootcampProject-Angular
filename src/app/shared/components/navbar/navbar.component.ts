@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../../features/services/concretes/auth.service';
 import { Router, RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
+import { AppToastrService, ToastrMessageType } from '../../../features/services/concretes/app-toastr.service';
 
 
 @Component({
@@ -14,7 +15,7 @@ import { HttpClientModule } from '@angular/common/http';
 })
 export class NavbarComponent implements OnInit{
   userLogged!:boolean;
-  constructor(private authService:AuthService,private router:Router){}
+  constructor(private authService:AuthService,private router:Router, private toastrService:AppToastrService){}
    ngOnInit(): void {
     this.setUserLogged();
     //console.log(this.getUserName());
@@ -23,6 +24,7 @@ export class NavbarComponent implements OnInit{
 
    logOut(){
     this.authService.logOut();
+    this.toastrService.message("Logged out successfully.", "Success", ToastrMessageType.Success)
     //this.router.navigate(['/'])
    }
    

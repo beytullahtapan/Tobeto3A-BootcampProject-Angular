@@ -27,10 +27,8 @@ export class AuthService extends AuthBaseService {
   override login(userForLoginRequest: UserForLoginRequest): Observable<AccessTokenModel<TokenModel>> {
     return this.httpClient.post<AccessTokenModel<TokenModel>>(`${this.apiUrl}/Login`,userForLoginRequest).pipe(map(response=>{
       this.storageService.setToken(response.accessToken.token);
-      alert("Giriş yapıldı");
       return response;
     }),catchError(responseError=>{
-      alert(responseError.error)
       throw responseError;
     })
     )
@@ -79,7 +77,6 @@ export class AuthService extends AuthBaseService {
 
   override logOut(){
     this.storageService.removeToken();
-    alert("Çıkış yapıldı");
     setTimeout(function(){
       location.reload()
     },400)
