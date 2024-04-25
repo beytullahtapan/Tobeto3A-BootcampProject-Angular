@@ -19,7 +19,7 @@ export class AuthService extends AuthBaseService {
   userId!:string;
   token:any;
   jwtHelper:JwtHelperService = new JwtHelperService;
-  claims:string[]=[];
+  claims:string[]=this.getRoles();
   
   private readonly apiUrl:string = `${environment.API_URL}/Auth`;
   constructor(private httpClient:HttpClient,private storageService:LocalStorageService) {super() }
@@ -92,13 +92,18 @@ export class AuthService extends AuthBaseService {
   }
 
   override isAdmin():boolean{
-    if(this.claims.includes("admin")){
+    if(this.claims.includes("Admin")){
       return true;
     }
     return false;
     
   }
 
-  
+  override hasRole(role:string):boolean{
+    if(this.claims.includes(role)){
+      return true;
+    }
+    return false;
+  }
   
 }

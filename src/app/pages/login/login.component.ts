@@ -22,7 +22,7 @@ export class LoginComponent implements OnInit{
   ngOnInit(): void {
     this.createLoginForm();
     if(this.authService.loggedIn()){
-      this.toastrService.message("You are already logged in. You are redirected to the home page.", "Success", ToastrMessageType.Info)
+      this.toastrService.message("You are already logged in. You are redirected to the home page.", "Info", ToastrMessageType.Info)
       this.router.navigate(['/']);
     }
   }

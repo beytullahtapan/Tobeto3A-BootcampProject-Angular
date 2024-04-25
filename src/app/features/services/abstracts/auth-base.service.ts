@@ -20,4 +20,5 @@ export abstract class AuthBaseService{
     abstract logOut():void;
     abstract getRoles():string[];
     abstract isAdmin():boolean;
+    abstract hasRole(role:string):boolean;
 }
