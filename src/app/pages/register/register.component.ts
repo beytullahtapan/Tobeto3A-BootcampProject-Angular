@@ -4,6 +4,9 @@ import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '../../features/services/concretes/auth.service';
 import { UserForRegisterRequest } from '../../features/models/requests/users/user-register-request';
 import { CommonModule } from '@angular/common';
+import { HasUnsavedChanges } from '../../core/guards/form/form-confirm-exit.guard';
+import { Observable } from 'rxjs';
+import { AppToastrService, ToastrMessageType } from '../../features/services/concretes/app-toastr.service';
 
 @Component({
   selector: 'app-register',
@@ -12,10 +15,10 @@ import { CommonModule } from '@angular/common';
   templateUrl: './register.component.html',
   styleUrl: './register.component.scss'
 })
-export class RegisterComponent implements OnInit {
+export class RegisterComponent implements OnInit, HasUnsavedChanges{
   registerForm!: FormGroup;
 
-  constructor(private formBuilder:FormBuilder, private authService:AuthService, private router:Router) { }
+  constructor(private formBuilder:FormBuilder, private authService:AuthService, private router:Router, private toastrService:AppToastrService) { }
 
   ngOnInit(): void {
     this.createRegisterForm();
@@ -54,32 +57,18 @@ export class RegisterComponent implements OnInit {
       console.log(this.registerForm.value);
       let registerModel:UserForRegisterRequest = Object.assign({},this.registerForm.value);
       this.authService.register(registerModel).subscribe((response)=>{
-        alert("Kayıt Başarılı")
-        this.router.navigate(['/login']);
+        this.toastrService.message("You successfully registered.", "Success", ToastrMessageType.Success);
+        this.registerForm.markAsPristine();
+        this.router.navigate(['/']);
       }, 
       (errorResponse: any) => { 
-        alert(`Error: ${errorResponse.errorMessage}`);
+        this.toastrService.message(`An error occured during register process.`, "Error",ToastrMessageType.Error);
       })
     }
   }
 
-  // register(){
-  //   if(this.registerForm.valid){
-  //     console.log(this.registerForm.value);
-  //     let registerModel = Object.assign({},this.registerForm.value);
-  //     this.authService.register(registerModel).subscribe((response)=>{
-  //       alert("Kayıt Başarılı")
-  //       this.router.navigate(['/login']);
-  //     }, 
-  //     (errorResponse: any) => { 
-  //       errorResponse.error.Errors.forEach((error: any) => {
-  //         console.error(`Property: ${error.Property}`);
-  //         error.Errors.forEach((errorMessage: string) => {
-  //           alert(`Error: ${errorMessage}`);
-  //         });
-  //       });
-  //     })
-  //   }
-  // }
+  hasUnsavedChanges():boolean{
+    return this.registerForm.dirty;
+  }
 
 }

@@ -11,7 +11,7 @@ export abstract class AuthBaseService{
 
     abstract login(userLoginRequest:UserForLoginRequest):Observable<AccessTokenModel<TokenModel>>;
 
-    abstract register(userForRegisterRequest:UserForRegisterRequest):Observable<AccessTokenModel<TokenModel>>;
+    abstract register(userForRegisterRequest:UserForRegisterRequest):Observable<TokenModel>;
 
     abstract getDecodedToken():void;
     abstract loggedIn():boolean;
