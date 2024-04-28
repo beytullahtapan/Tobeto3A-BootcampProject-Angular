@@ -19,7 +19,7 @@ export class AuthService extends AuthBaseService {
   userId!:string;
   token:any;
   jwtHelper:JwtHelperService = new JwtHelperService;
-  claims:string[]=[];
+  claims:string[]=this.getRoles();
   
   private readonly apiUrl:string = `${environment.API_URL}/Auth`;
   constructor(private httpClient:HttpClient,private storageService:LocalStorageService) {super() }
@@ -27,17 +27,21 @@ export class AuthService extends AuthBaseService {
   override login(userForLoginRequest: UserForLoginRequest): Observable<AccessTokenModel<TokenModel>> {
     return this.httpClient.post<AccessTokenModel<TokenModel>>(`${this.apiUrl}/Login`,userForLoginRequest).pipe(map(response=>{
       this.storageService.setToken(response.accessToken.token);
-      alert("Giriş yapıldı");
       return response;
     }),catchError(responseError=>{
-      alert(responseError.error)
       throw responseError;
     })
     )
   }
 
-  override register(userForRegisterRequest: UserForRegisterRequest): Observable<AccessTokenModel<TokenModel>> {
-    return this.httpClient.post<AccessTokenModel<TokenModel>>(`${this.apiUrl}/RegisterApplicant`,userForRegisterRequest);
+  override register(userForRegisterRequest: UserForRegisterRequest): Observable<TokenModel> {
+    return this.httpClient.post<TokenModel>(`${this.apiUrl}/RegisterApplicant`,userForRegisterRequest).pipe(map(response=>{
+      this.storageService.setToken(response.token);
+      return response;
+    }),catchError(responseError=>{
+      throw responseError;
+    })
+    );
   }
 
 
@@ -79,7 +83,6 @@ export class AuthService extends AuthBaseService {
 
   override logOut(){
     this.storageService.removeToken();
-    alert("Çıkış yapıldı");
     setTimeout(function(){
       location.reload()
     },400)
@@ -95,13 +98,18 @@ export class AuthService extends AuthBaseService {
   }
 
   override isAdmin():boolean{
-    if(this.claims.includes("admin")){
+    if(this.claims.includes("Admin")){
       return true;
     }
     return false;
     
   }
 
-  
+  override hasRole(role:string):boolean{
+    if(this.claims.includes(role)){
+      return true;
+    }
+    return false;
+  }
   
 }

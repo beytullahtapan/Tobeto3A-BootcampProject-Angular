@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms'
 import { Router, RouterModule} from '@angular/router';
 import { AuthService } from '../../features/services/concretes/auth.service';
 import { UserForLoginRequest } from '../../features/models/requests/users/user-login-request';
+import { AppToastrService, ToastrMessageType } from '../../features/services/concretes/app-toastr.service';
 
 
 @Component({
@@ -16,12 +17,12 @@ export class LoginComponent implements OnInit{
 
   loginForm!: FormGroup;
 
-  constructor(private formBuilder:FormBuilder, private authService:AuthService, private router:Router){}
+  constructor(private formBuilder:FormBuilder, private authService:AuthService, private router:Router, private toastrService:AppToastrService){}
 
   ngOnInit(): void {
     this.createLoginForm();
     if(this.authService.loggedIn()){
-      alert("You are already logged in.");
+      this.toastrService.message("You are already logged in. You are redirected to the home page.", "Info", ToastrMessageType.Info)
       this.router.navigate(['/']);
     }
   }
@@ -37,10 +38,10 @@ export class LoginComponent implements OnInit{
     if(this.loginForm.valid){
       let loginModel:UserForLoginRequest = Object.assign({},this.loginForm.value);
       this.authService.login(loginModel).subscribe(response=>{
-        //alert(response.accessToken.expiration);
+        this.toastrService.message("You successfully logged in.", "Success", ToastrMessageType.Success)
         this.router.navigate(['/'])
       },(error:any)=>{
-        alert(error.error)
+        this.toastrService.message(`An error occured during login process.`, "Error",ToastrMessageType.Error);
       })
     }
   }
