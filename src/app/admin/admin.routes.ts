@@ -7,7 +7,7 @@ import { roleGuard } from '../core/guards/role/role.guard';
 import { AuthRoleType } from '../features/constants/auth-role-type';
 
 export const adminRoutes: Routes = [
-    { path: "", component: AdminComponent, canActivate:[roleGuard], data: {expectedRoles: [AuthRoleType.Admin]}, children: [
+    { path: "", component: AdminComponent, children: [
         { path: "user", component: UserComponent },
         { path: "bootcamps", component: BootcampsComponent },
         { path: "bootcamps/add", component: AddComponent },
