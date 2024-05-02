@@ -8,7 +8,7 @@ import { Injectable } from '@angular/core';
     constructor(private http: HttpClient) {}
   
     submitContactForm(formData: any) {
-      return this.http.post('http://localhost:60805/api/Contacts', formmData);
+      return this.http.post('http://localhost:60805/api/Contacts', formData);
     }
   }
 
