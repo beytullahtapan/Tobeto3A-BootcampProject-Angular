@@ -12,7 +12,7 @@ import { AppToastrService, ToastrMessageType } from '../../features/services/con
 })
 export class ContactComponent implements OnInit {
   contactForm!: FormGroup;
-  isSubmittiiiing: boolean = false;
+  isSubmitting: boolean = false;
   submitError: string | null = null;
 
   constructor(private fb: FormBuilder, private contactService: ContactService,private toastrService:AppToastrService) {}
@@ -49,3 +49,4 @@ export class ContactComponent implements OnInit {
       );
   }
 }
+

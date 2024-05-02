@@ -5,14 +5,12 @@ import { CommonModule } from '@angular/common'; // CommonModule eklenmeli
 import { initFlowbite } from 'flowbite';
 import { SharedModule } from './shared/shared.module';
 import { RouterOutlet } from '@angular/router';
-import { ProfileComponent } from './shared/components/profile/profile.component';
 import { HttpClientModule } from '@angular/common/http';
-import { FooterComponent } from './shared/components/footer/footer.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, RouterOutlet, SharedModule,ProfileComponent,HttpClientModule,FooterComponent],
+  imports: [RouterOutlet, HttpClientModule, SharedModule],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
