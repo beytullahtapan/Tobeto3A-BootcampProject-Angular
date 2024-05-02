@@ -4,13 +4,13 @@ import { ContactService } from '../../features/services/concretes/contact.servic
 import { AppToastrService, ToastrMessageType } from '../../features/services/concretes/app-toastr.service';
 
 @Component({
-  selector: 'app-contact-page',
+  selector: 'app-contact',
   standalone: true,
   imports: [ReactiveFormsModule],
   templateUrl: './contact-page.component.html',
   styleUrl: './contact-page.component.scss'
 })
-export class ContactPageComponent implements OnInit {
+export class ContactComponent implements OnInit {
   contactForm!: FormGroup;
   isSubmitting: boolean = false;
   submitError: string | null = null;
