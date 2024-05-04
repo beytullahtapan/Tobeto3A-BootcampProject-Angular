@@ -19,19 +19,19 @@ export class AppComponent implements OnInit {
   showNavbar = true;
 
   constructor(private router: Router, private activatedRoute: ActivatedRoute) {
-    // Rota değişikliklerini dinle
+   
     this.router.events.pipe(
       filter(event => event instanceof NavigationEnd)
     ).subscribe(() => this.updateNavbarVisibility());
   }
 
   ngOnInit(): void {
-    initFlowbite(); // Flowbite'ı başlat
+    initFlowbite(); 
   }
 
   updateNavbarVisibility() {
-    const path = this.router.url; // Aktif URL'yi al
-    this.showNavbar = !['/login', '/register'].includes(path) && !path.startsWith('/admin'); // Navbar'ın görünürlüğünü kontrol et
+    const path = this.router.url; 
+    this.showNavbar = !['/login', '/register'].includes(path) && !path.startsWith('/admin'); 
   }
   
 }

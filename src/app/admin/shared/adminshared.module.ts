@@ -1,8 +1,8 @@
-import { NgModule } from "@angular/core";
+import { NgModule, OnInit } from "@angular/core";
 import { CommonModule } from "@angular/common";
-import { NavbarComponent } from "../../shared/components/navbar/navbar.component";
 import { AdminSidebarComponent } from "./components/sidebar/sidebar.component";
 import { AdminNavbarComponent } from "./components/navbar/navbar.component";
+import { EditorModule } from "@tinymce/tinymce-angular";
 
 @NgModule({
     declarations:[],
@@ -10,4 +10,6 @@ import { AdminNavbarComponent } from "./components/navbar/navbar.component";
     imports:[CommonModule,CommonModule,AdminNavbarComponent,AdminSidebarComponent],
 
 })
-export class SharedModule{}
+export class AdminSharedModule{
+    
+}

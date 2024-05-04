@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { initFlowbite } from 'flowbite';
 
 @Component({
   selector: 'app-sidebar',
@@ -8,6 +9,8 @@ import { RouterModule } from '@angular/router';
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.scss'
 })
-export class AdminSidebarComponent {
-
+export class AdminSidebarComponent implements OnInit {
+  ngOnInit(): void {
+    initFlowbite();
+  }
 }
