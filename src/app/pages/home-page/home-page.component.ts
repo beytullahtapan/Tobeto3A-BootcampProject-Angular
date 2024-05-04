@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { NavbarComponent } from '../../shared/components/navbar/navbar.component';
-import { FaqComponent } from '../../components/faq/faq.component';
+import { FaqComponent } from '../../features/components/faq/faq.component';
 import { BootcampListGroupComponent } from '../../features/components/bootcamps/bootcamp-list-group/bootcamp-list-group.component';
-import { JumbotronComponent } from '../../components/jumbotron/jumbotron.component';
+import { JumbotronComponent } from '../../features/components/jumbotron/jumbotron.component';
 
 @Component({
   selector: 'app-home-page',
