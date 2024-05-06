@@ -16,22 +16,22 @@ import { HttpClientModule } from '@angular/common/http';
 })
 export class AppComponent implements OnInit {
   title = 'Bootcamp Project';
-  showNavbar = true;
+  ShowVisibility = true;
 
   constructor(private router: Router, private activatedRoute: ActivatedRoute) {
    
     this.router.events.pipe(
       filter(event => event instanceof NavigationEnd)
-    ).subscribe(() => this.updateNavbarVisibility());
+    ).subscribe(() => this.updateVisibility());
   }
 
   ngOnInit(): void {
     initFlowbite(); 
   }
 
-  updateNavbarVisibility() {
+  updateVisibility() {
     const path = this.router.url; 
-    this.showNavbar = !['/login', '/register'].includes(path) && !path.startsWith('/admin'); 
+    this.ShowVisibility = !['/login', '/register'].includes(path) && !path.startsWith('/admin') && !path.startsWith('/instructor'); 
   }
   
 }
