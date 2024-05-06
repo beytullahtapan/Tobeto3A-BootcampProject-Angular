@@ -5,6 +5,7 @@ import { RegisterComponent } from './pages/register/register.component';
 import { adminRoutes } from './admin/admin.routes';
 import { formConfirmExitGuard } from './core/guards/form/form-confirm-exit.guard';
 import { ContactComponent } from './pages/contact/contact-page.component';
+import { instructorRoutes } from './instructor/instructor.routes';
 
 
 export const routes: Routes = [
@@ -15,4 +16,6 @@ export const routes: Routes = [
 
    //Admin
    { path: 'admin', children: adminRoutes },
+   //Instructor
+   { path: 'instructor', children: instructorRoutes },
 ];
