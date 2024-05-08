@@ -1,6 +1,6 @@
-<div [ngClass]="{'container mx-auto': showNavbar, '': !showNavbar}">
-    <app-navbar *ngIf="showNavbar"></app-navbar>
+<div [ngClass]="{'container mx-auto': ShowVisibility, '': !ShowVisibility}">
+    <app-navbar *ngIf="ShowVisibility"></app-navbar>
     <router-outlet></router-outlet>
-    <app-footer *ngIf="showNavbar"></app-footer>
+    <app-footer *ngIf="ShowVisibility"></app-footer>
 </div>
 

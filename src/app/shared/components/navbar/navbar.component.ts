@@ -4,6 +4,7 @@ import { AuthService } from '../../../features/services/concretes/auth.service';
 import { Router, RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { AppToastrService, ToastrMessageType } from '../../../features/services/concretes/app-toastr.service';
+import { initFlowbite } from 'flowbite';
 
 
 @Component({
@@ -17,7 +18,10 @@ export class NavbarComponent implements OnInit{
   userLogged!:boolean;
   constructor(private authService:AuthService,private router:Router, private toastrService:AppToastrService){}
    ngOnInit(): void {
+
+    initFlowbite();
     this.setUserLogged();
+    
     //console.log(this.getUserName());
     //console.log(this.getUserId());
    }
@@ -27,7 +31,7 @@ export class NavbarComponent implements OnInit{
     this.toastrService.message("Logged out successfully.", "Success", ToastrMessageType.Success)
     //this.router.navigate(['/'])
    }
-   
+
    setUserLogged() :boolean{
     return this.userLogged=this.authService.loggedIn()
    }
@@ -39,8 +43,7 @@ export class NavbarComponent implements OnInit{
    getUserId():string{
     return this.authService.getCurrentUserId();
    }
-   
-   
+
 }
 document.addEventListener('DOMContentLoaded', function() {
   // open

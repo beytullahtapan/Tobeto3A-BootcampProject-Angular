@@ -1,15 +1,16 @@
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { initFlowbite } from 'flowbite';
 
 @Component({
-  selector: 'app-sidebar',
+  selector: 'instructorapp-sidebar',
   standalone: true,
-  imports: [RouterModule],
+  imports: [CommonModule,RouterModule],
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.scss'
 })
-export class AdminSidebarComponent implements OnInit {
+export class InstructorSidebarComponent implements OnInit {
   ngOnInit(): void {
     initFlowbite();
   }
