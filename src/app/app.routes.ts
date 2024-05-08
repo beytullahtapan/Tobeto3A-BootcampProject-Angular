@@ -7,6 +7,7 @@ import { adminRoutes } from './admin/admin.routes';
 import { AdminComponent } from './admin/admin.component';
 import { formConfirmExitGuard } from './core/guards/form/form-confirm-exit.guard';
 import { ContactComponent } from './pages/contact/contact-page.component';
+import { BootcampListPageComponent } from './pages/bootcamp-list-page/bootcamp-list-page.component';
 
 
 export const routes: Routes = [
@@ -14,7 +15,7 @@ export const routes: Routes = [
    { path: 'login', component: LoginComponent },
    { path: 'register', component: RegisterComponent, canDeactivate:[formConfirmExitGuard] },
    { path:'contact',component:ContactComponent},
-
+   { path:'bootcamps',component:BootcampListPageComponent},
    //Admin
    { path: 'admin', children: adminRoutes },
 ];

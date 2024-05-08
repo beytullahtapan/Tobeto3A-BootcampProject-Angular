@@ -6,6 +6,6 @@ import { Injectable } from "@angular/core";
 @Injectable()
 export abstract class BootcampBaseService{
     abstract getList(pageRequest:PageRequest):Observable<BootcampListDto>
-    abstract getBootcampListByModelId(pageRequest:PageRequest,modelId:string)
+    abstract getBootcampListByInstructorId(pageRequest:PageRequest,instructorId:string)
     :Observable<BootcampListDto>
 }

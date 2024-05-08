@@ -38,15 +38,15 @@ export class BootcampService extends BootcampBaseService {
   }
 
 
-  override getBootcampListByModelId(pageRequest: PageRequest,modelId:string): Observable<BootcampListDto> {
-    const newRequest :{[key:string]:string | number}={
-      page:pageRequest.page,
-      pageSize:pageRequest.pageSize,
-      modelId:modelId
+  override getBootcampListByInstructorId(pageRequest: PageRequest, instructorId: string): Observable<BootcampListDto> {
+    const newRequest: { [key: string]: string | number } = {
+      page: pageRequest.page,
+      pageSize: pageRequest.pageSize,
+      instructorId: instructorId
     };
 
-    return this.httpClient.get<BootcampListDto>(`${this.apiUrl}/getbootcampbymodel`,{
-      params:newRequest
+    return this.httpClient.get<BootcampListDto>(`${this.apiUrl}/getbootcampbyinstructor`, {
+      params: newRequest
     }).pipe(
       map((response)=>{
         const newResponse:BootcampListDto={
