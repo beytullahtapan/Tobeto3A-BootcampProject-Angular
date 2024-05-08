@@ -27,7 +27,7 @@ export class BootcampListPageComponent implements OnInit{
   };
  
   constructor(private bootcampService: BootcampService, private activatedRoute: ActivatedRoute) {}
-  readonly PAGE_SIZE = 1;
+  readonly PAGE_SIZE = 6;
   ngOnInit(): void {
     this.activatedRoute.params.subscribe(params => {
       if (params["instructorId"]) {
