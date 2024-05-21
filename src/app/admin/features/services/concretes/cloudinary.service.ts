@@ -11,7 +11,7 @@ import { updateCloudrinaryResponse } from '../../models/responses/cloudinary/upd
 })
 export class CloudiranyService extends CloudiranyBaseService {
 
-  private readonly apiUrl: string = `${environment.API_URL}/Settings/1`;
+  private readonly apiUrl: string = `${environment.API_URL}`;
 
   constructor(private httpClient: HttpClient) {
     super();
@@ -20,7 +20,7 @@ export class CloudiranyService extends CloudiranyBaseService {
 
 
   updateCloudrinary(FormData: FormData): Observable<updateCloudrinaryResponse> {
-    return this.httpClient.put<updateCloudrinaryResponse>(`${this.apiUrl}`, FormData).pipe(
+    return this.httpClient.put<updateCloudrinaryResponse>(`${this.apiUrl}/Settings/1`, FormData).pipe(
       map(response => {
         console.log("Başarılı bir şekilde yüklendi", response);
         return response;
@@ -31,6 +31,17 @@ export class CloudiranyService extends CloudiranyBaseService {
     );
   }
 
+  addbootcampimage(FormData: FormData): Observable<updateCloudrinaryResponse> {
+    return this.httpClient.post<updateCloudrinaryResponse>(`${this.apiUrl}/Bootcamps/Image`, FormData).pipe(
+      map(response => {
+        console.log("Başarılı bir şekilde yüklendi", response);
+        return response;
+      }),
+      catchError(responseError => {
+        throw responseError;
+      })
+    );
+  }
 
 
 
