@@ -11,6 +11,7 @@
   "private": true,
   "dependencies": {
     "@angular/animations": "^17.3.5",
+    "@angular/cdk": "^17.3.5",
     "@angular/common": "^17.3.0",
     "@angular/compiler": "^17.3.0",
     "@angular/core": "^17.3.0",
@@ -20,6 +21,7 @@
     "@angular/platform-browser-dynamic": "^17.3.0",
     "@angular/router": "^17.3.0",
     "@auth0/angular-jwt": "^5.2.0",
+    "@material-tailwind/html": "^2.2.2",
     "@tinymce/tinymce-angular": "^8.0.0",
     "flowbite": "^2.3.0",
     "flowbite-datepicker": "^1.2.6",
