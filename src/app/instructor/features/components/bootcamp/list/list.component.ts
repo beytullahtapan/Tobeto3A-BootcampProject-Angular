@@ -59,7 +59,7 @@ export class ListInstructorBootcampComponent implements OnInit {
             );
           });
           this.bootcamps = [response];
-          console.log(this.bootcamps);
+
         } else {
           console.error('Response or items array is null.');
         }

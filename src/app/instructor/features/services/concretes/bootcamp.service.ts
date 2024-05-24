@@ -12,7 +12,6 @@ import { UpdateBootcampRequest } from '../../models/requests/bootcamp/updateboot
 import { UpdateBootcampResponse } from '../../models/responses/bootcamp/updatebootcampresponse';
 import { DeleteBootcampImageRequest } from '../../models/requests/bootcamp/deletebootcampımagerequest';
 import { DeleteBootcampImageResponse } from '../../models/responses/bootcamp/deletebootcampımageresponse';
-
 @Injectable({
   providedIn: 'root'
 })
@@ -79,15 +78,15 @@ export class InstructorBootcamp extends InstructorBootcampBaseService {
         throw responseError;
       })
     );
-}
+  }
 
-override deletebootcamp(bootcampId: number): Observable<string> {
-  return this.httpClient.delete<string>(`${this.apiUrl}/${bootcampId}`).pipe(
-    map(response => response),
-    catchError(responseError => {
-      throw responseError;
-    })
-  );
-}
+  override deletebootcamp(bootcampId: number): Observable<string> {
+    return this.httpClient.delete<string>(`${this.apiUrl}/${bootcampId}`).pipe(
+      map(response => response),
+      catchError(responseError => {
+        throw responseError;
+      })
+    );
+  }
 
 }
