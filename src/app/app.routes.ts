@@ -7,6 +7,7 @@ import { formConfirmExitGuard } from './core/guards/form/form-confirm-exit.guard
 import { ContactComponent } from './pages/contact/contact-page.component';
 import { instructorRoutes } from './instructor/instructor.routes';
 import { BootcampListPageComponent } from './pages/bootcamp-list-page/bootcamp-list-page.component';
+import { AnnouncementsComponent } from './pages/announcements/announcements.component';
 
 
 export const routes: Routes = [
@@ -15,8 +16,10 @@ export const routes: Routes = [
    { path: 'register', component: RegisterComponent, canDeactivate:[formConfirmExitGuard] },
    { path:'contact',component:ContactComponent},
    { path:'bootcamps',component:BootcampListPageComponent},
+   { path:'announcements', component:AnnouncementsComponent},
    //Admin
    { path: 'admin', children: adminRoutes },
    //Instructor
    { path: 'instructor', children: instructorRoutes },
+   
 ];
