@@ -13,11 +13,10 @@ import { DeleteBootcampImageResponse } from '../../models/responses/bootcamp/del
 
 @Injectable()
 export abstract class InstructorBootcampBaseService {
-    abstract add(addBootcampRequest:AddBootcampRequest):Observable<AddBootcampResponse>;
-    abstract list(listBootcampRequest:ListBootcampRequest):Observable<ListBootcampResponse>;
+    abstract add(addBootcampRequest: AddBootcampRequest): Observable<AddBootcampResponse>;
+    abstract list(listBootcampRequest: ListBootcampRequest): Observable<ListBootcampResponse>;
     abstract getBootcampById(bootcampId: number): Observable<GetbyIdBootcampResponse>;
-    abstract updateBootcamp(updateBootcampRequest: UpdateBootcampRequest): Observable<UpdateBootcampResponse>; 
-    abstract deleteimage(deleteBootcampImageRequest:DeleteBootcampImageRequest):Observable<DeleteBootcampImageResponse>;
+    abstract updateBootcamp(updateBootcampRequest: UpdateBootcampRequest): Observable<UpdateBootcampResponse>;
+    abstract deleteimage(deleteBootcampImageRequest: DeleteBootcampImageRequest): Observable<DeleteBootcampImageResponse>;
     abstract deletebootcamp(bootcampId: number): Observable<string>;
-
 }
