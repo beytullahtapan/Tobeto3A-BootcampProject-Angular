@@ -28,8 +28,8 @@ export class BootcampListGroupComponent implements OnInit {
   readonly PAGE_SIZE=6;
   ngOnInit(): void {
     this.activatedRoute.params.subscribe(params=>{
-      if(params["modelId"]){
-        this.getBootcampListByModel({page:0,pageSize:this.PAGE_SIZE},params["modelId"])
+      if(params["instructorId"]){
+        this.getBootcampListByInstructor({page:0,pageSize:this.PAGE_SIZE},params["modelId"])
       }else{this.getList({page:0,pageSize:this.PAGE_SIZE})}
     })
     
@@ -44,8 +44,8 @@ export class BootcampListGroupComponent implements OnInit {
     
   }
 
-  getBootcampListByModel(pageRequest:PageRequest,modelId:string){
-    this.BootcampService.getBootcampListByModelId(pageRequest,modelId).subscribe((response)=>{
+  getBootcampListByInstructor(pageRequest:PageRequest,instructorId:string){
+    this.BootcampService.getBootcampListByInstructorId(pageRequest,instructorId).subscribe((response)=>{
       this.bootcampList=response;
       this.updateCurrentPageNumber();
     })
