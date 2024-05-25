@@ -6,4 +6,5 @@ export interface UserForRegisterRequest{
     lastName:string,
     dateOfBirth:Date,
     nationalIdentity:string
+    about:string
 }

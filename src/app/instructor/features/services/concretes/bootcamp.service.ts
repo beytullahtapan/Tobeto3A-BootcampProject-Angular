@@ -12,7 +12,8 @@ import { UpdateBootcampRequest } from '../../models/requests/bootcamp/updateboot
 import { UpdateBootcampResponse } from '../../models/responses/bootcamp/updatebootcampresponse';
 import { DeleteBootcampImageRequest } from '../../models/requests/bootcamp/deletebootcampımagerequest';
 import { DeleteBootcampImageResponse } from '../../models/responses/bootcamp/deletebootcampımageresponse';
-
+import { ListLessonRequest } from '../../models/requests/lesson/listlessonrequest';
+import { ListLessonResponse } from '../../models/responses/lesson/listlessonresponse';
 @Injectable({
   providedIn: 'root'
 })
@@ -36,7 +37,7 @@ export class InstructorBootcamp extends InstructorBootcampBaseService {
   override list(listBootcampRequest: ListBootcampRequest): Observable<ListBootcampResponse> {
     const url = `${this.apiUrl}/instructor/${listBootcampRequest.InstructorId}`;
     const params = { PageIndex: listBootcampRequest.pageIndex.toString(), PageSize: listBootcampRequest.pageSize.toString() };
-  
+
     return this.httpClient.get<ListBootcampResponse>(url, { params }).pipe(
       map(response => response),
       catchError(responseError => {
@@ -45,6 +46,7 @@ export class InstructorBootcamp extends InstructorBootcampBaseService {
     );
   }
 
+  
 
   override getBootcampById(bootcampId: number): Observable<GetbyIdBootcampResponse> {
     return this.httpClient.get<GetbyIdBootcampResponse>(`${this.apiUrl}/bootcamp/${bootcampId}`).pipe(
@@ -79,15 +81,15 @@ export class InstructorBootcamp extends InstructorBootcampBaseService {
         throw responseError;
       })
     );
-}
+  }
 
-override deletebootcamp(bootcampId: number): Observable<string> {
-  return this.httpClient.delete<string>(`${this.apiUrl}/${bootcampId}`).pipe(
-    map(response => response),
-    catchError(responseError => {
-      throw responseError;
-    })
-  );
-}
+  override deletebootcamp(bootcampId: number): Observable<string> {
+    return this.httpClient.delete<string>(`${this.apiUrl}/${bootcampId}`).pipe(
+      map(response => response),
+      catchError(responseError => {
+        throw responseError;
+      })
+    );
+  }
 
 }

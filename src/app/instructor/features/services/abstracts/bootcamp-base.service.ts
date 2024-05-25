@@ -9,15 +9,16 @@ import { UpdateBootcampRequest } from '../../models/requests/bootcamp/updateboot
 import { UpdateBootcampResponse } from '../../models/responses/bootcamp/updatebootcampresponse';
 import { DeleteBootcampImageRequest } from '../../models/requests/bootcamp/deletebootcampımagerequest';
 import { DeleteBootcampImageResponse } from '../../models/responses/bootcamp/deletebootcampımageresponse';
+import { ListLessonRequest } from '../../models/requests/lesson/listlessonrequest';
+import { ListLessonResponse } from '../../models/responses/lesson/listlessonresponse';
 
 
 @Injectable()
 export abstract class InstructorBootcampBaseService {
-    abstract add(addBootcampRequest:AddBootcampRequest):Observable<AddBootcampResponse>;
-    abstract list(listBootcampRequest:ListBootcampRequest):Observable<ListBootcampResponse>;
+    abstract add(addBootcampRequest: AddBootcampRequest): Observable<AddBootcampResponse>;
+    abstract list(listBootcampRequest: ListBootcampRequest): Observable<ListBootcampResponse>;
     abstract getBootcampById(bootcampId: number): Observable<GetbyIdBootcampResponse>;
-    abstract updateBootcamp(updateBootcampRequest: UpdateBootcampRequest): Observable<UpdateBootcampResponse>; 
-    abstract deleteimage(deleteBootcampImageRequest:DeleteBootcampImageRequest):Observable<DeleteBootcampImageResponse>;
+    abstract updateBootcamp(updateBootcampRequest: UpdateBootcampRequest): Observable<UpdateBootcampResponse>;
+    abstract deleteimage(deleteBootcampImageRequest: DeleteBootcampImageRequest): Observable<DeleteBootcampImageResponse>;
     abstract deletebootcamp(bootcampId: number): Observable<string>;
-
 }
