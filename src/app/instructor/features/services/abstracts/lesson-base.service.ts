@@ -12,6 +12,7 @@ import { GetByidLessonResponse } from '../../models/responses/lesson/getbyidresp
 export abstract class InstructorLessonBaseService {
     abstract add(addlessonrequest: AddLessonRequest): Observable<AddLessonResponse>;
     abstract list(listLessonRequest: ListLessonRequest): Observable<ListLessonResponse>;
+    abstract getLessonlist(ListLessonRequest: ListLessonRequest): Observable<ListLessonResponse>;
     abstract getbyid(getByidLessonRequest: GetByidLessonRequest): Observable<GetByidLessonResponse>;
     abstract deletelesson(lessonId: number): Observable<string>;
 }

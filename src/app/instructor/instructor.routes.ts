@@ -16,7 +16,7 @@ export const instructorRoutes: Routes = [
         { path: "bootcamp/list", component: ListInstructorBootcampComponent },
         { path: "bootcamp/edit/:id", component: EditInstructorBootcampComponent },
         { path: "lesson/add", component: AddInstructorLessonComponent },
-        { path: "lesson/list", component: ListInstructorLessonComponent },
+        { path: "lesson/list/:id", component: ListInstructorLessonComponent },
         { path: "lesson/edit/:id", component: EditInstructorLessonComponent },
         { path: "lesson/content/:id", component: InstructorContentComponent },
     ]},

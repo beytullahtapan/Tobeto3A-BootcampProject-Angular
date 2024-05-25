@@ -15,6 +15,8 @@ import { InstructorLessonBaseService } from '../../../services/abstracts/lesson-
 import { InstructorLessonService } from '../../../services/concretes/lesson.service';
 import { HttpClientModule } from '@angular/common/http';
 import { Title } from '@angular/platform-browser';
+import { InstructorLessonContentService } from '../../../services/concretes/lessoncontent.service';
+import { AddLessonContentRequest } from '../../../models/requests/lesson/addlessoncontentrequest';
 
 @Component({
   selector: 'app-add',
@@ -39,7 +41,7 @@ export class AddInstructorLessonComponent implements OnInit {
     private formBuilder: FormBuilder,
     private authService: AuthService,
     private toastrService: AppToastrService,
-    private userService: UserService
+    private lessonContentService: InstructorLessonContentService
   ) {}
 
   ngOnInit(): void {
@@ -80,22 +82,41 @@ export class AddInstructorLessonComponent implements OnInit {
   Addlesson(): void {
     if (this.LessonaddForm.valid) {
         let addLessonModel: AddLessonRequest = Object.assign({}, this.LessonaddForm.value);
-        console.log("gelen id" +addLessonModel.bootcampId);
-        console.log("gelen title" + addLessonModel.title);
+
+        // Add the lesson
         this.lessonService.add(addLessonModel).subscribe(
-          (response) => {
-              
-              this.toastrService.message("Lesson Başarıyla Eklendi.", "Başarılı!", ToastrMessageType.Success);
-              this.router.navigate(['/instructor/lesson/list']);
-          },
-          (error) => {
-              this.toastrService.message("Lesson Eklenemedi..", "Hata!", ToastrMessageType.Error);
-          }
-      );
-                
+            (lessonResponse) => {
+                const lessonId = lessonResponse.id;
+
+                // Create lesson content request object
+                let addLessonContentRequest: AddLessonContentRequest = {
+                    text: 'İçerik Buraya Gelcek',
+                    videoUrl: 'Video Linki Buraya gelecek',
+                    lessonId: lessonId
+                };
+
+                // Add the lesson content
+                this.lessonContentService.add(addLessonContentRequest).subscribe(
+                    () => {
+                        this.toastrService.message("Lesson and content successfully added.", "Success", ToastrMessageType.Success);
+                        this.router.navigate([`/instructor/lesson/list/${addLessonModel.bootcampId}`]);
+                    },
+                    (error) => {
+                        console.error("Error adding lesson content:", error);
+                        this.toastrService.message("Error adding lesson content.", "Error", ToastrMessageType.Error);
+                    }
+                );
+            },
+            (error) => {
+                console.error("Error adding lesson:", error);
+                this.toastrService.message("Error adding lesson.", "Error", ToastrMessageType.Error);
+            }
+        );               
     } else {
-        this.toastrService.message("Form doğrulama hatası..", "Hata!", ToastrMessageType.Error);
+        this.toastrService.message("Form validation error.", "Error", ToastrMessageType.Error);
     }
 }
+
+
 }
 

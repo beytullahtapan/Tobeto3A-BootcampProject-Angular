@@ -35,7 +35,7 @@ export class AuthService extends AuthBaseService {
   }
 
   override register(userForRegisterRequest: UserForRegisterRequest): Observable<TokenModel> {
-    return this.httpClient.post<TokenModel>(`${this.apiUrl}/Register`,userForRegisterRequest).pipe(map(response=>{
+    return this.httpClient.post<TokenModel>(`${this.apiUrl}/RegisterApplicant`,userForRegisterRequest).pipe(map(response=>{
       this.storageService.setToken(response.token);
       return response;
     }),catchError(responseError=>{

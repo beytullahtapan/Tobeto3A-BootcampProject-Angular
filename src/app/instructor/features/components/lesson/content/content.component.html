@@ -38,35 +38,49 @@
                   </li>
               </ul>
           </div>
-          <form  >
-          <div id="default-tab-content">
+          <form [formGroup]="LessoncontentForm">
+            <div id="default-tab-content">
               <div class="hidden mt-3 p-4 rounded-lg bg-gray-50 bg-gray-800" id="content" role="tabpanel" aria-labelledby="content-tab">
-                  <h2 class="text-white font-bold text-lg">Ders İçerik</h2>
-                  <div class="mt-4">
-                      <div class="flex-1">
-                          <editor apiKey="jx9ytf72gyizaku21vopxgdq64svuo24qpelt0sy5l58r76q"
-                          [init]="{
-                            plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount linkchecker',
-                            toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat',
-                          }"
-                          ></editor>
-                      </div>
+                <h2 class="text-white font-bold text-lg">Ders İçerik</h2>
+                <div class="mt-4">
+                  <div class="flex-1">
+                    <editor formControlName="text" apiKey="jx9ytf72gyizaku21vopxgdq64svuo24qpelt0sy5l58r76q"
+                      [init]="{
+                        plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount linkchecker code fullscreen',
+                        toolbar: 'undo redo | formatselect | bold italic underline strikethrough | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image media | codesample code | fullscreen',
+                        codesample_languages: [
+                          { text: 'HTML/XML', value: 'markup' },
+                          { text: 'JavaScript', value: 'javascript' },
+                          { text: 'CSS', value: 'css' },
+                          { text: 'PHP', value: 'php' },
+                          { text: 'Ruby', value: 'ruby' },
+                          { text: 'Python', value: 'python' },
+                          { text: 'Java', value: 'java' },
+                          { text: 'C', value: 'c' },
+                          { text: 'C#', value: 'csharp' },
+                          { text: 'C++', value: 'cpp' }
+                        ],
+                        toolbar_mode: 'floating',
+                        branding: false,
+                        height: 500
+                      }">
+                    </editor>
                   </div>
-                  
+                </div>
               </div>
               <div class="hidden mt-3 p-4 rounded-lg bg-gray-50 bg-gray-800" id="video" role="tabpanel" aria-labelledby="video-tab">
                 <div class="mt-4">
                   <div class="flex-1">
-                      <label class="text-white" for="Lesson">Ders Video URL </label>
-                      <input placeholder="Video Urlsi" class="w-full bg-gray-800 rounded-md border-gray-700 text-white px-2 py-1 mt-2" id="Lesson" type="text" formControlName="title">
+                    <label class="text-white" for="Lesson">Ders Video URL</label>
+                    <input placeholder="Video Urlsi" class="w-full bg-gray-800 rounded-md border-gray-700 text-white px-2 py-1 mt-2" id="Lesson" type="text" formControlName="videoUrl">
                   </div>
+                </div>
               </div>
-              </div>
-            
               <div class="m-5 text-center">
-                <button  class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center bg-blue-600 hover:bg-blue-700 focus:ring-blue-800">Kaydet</button>
+                <button (click)="UpdateLessonContent()" type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center bg-blue-600 hover:bg-blue-700 focus:ring-blue-800">Kaydet</button>
               </div>
-          </div>
-        </form>
+            </div>
+          </form>
+          
       </div>
 </section>

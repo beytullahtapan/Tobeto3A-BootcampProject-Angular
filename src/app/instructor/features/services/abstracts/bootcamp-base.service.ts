@@ -9,6 +9,8 @@ import { UpdateBootcampRequest } from '../../models/requests/bootcamp/updateboot
 import { UpdateBootcampResponse } from '../../models/responses/bootcamp/updatebootcampresponse';
 import { DeleteBootcampImageRequest } from '../../models/requests/bootcamp/deletebootcampımagerequest';
 import { DeleteBootcampImageResponse } from '../../models/responses/bootcamp/deletebootcampımageresponse';
+import { ListLessonRequest } from '../../models/requests/lesson/listlessonrequest';
+import { ListLessonResponse } from '../../models/responses/lesson/listlessonresponse';
 
 
 @Injectable()

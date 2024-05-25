@@ -11,6 +11,7 @@ import { GetByidLessonRequest } from '../../models/requests/lesson/getbyidreques
 import { GetByidLessonResponse } from '../../models/responses/lesson/getbyidresponse';
 import { UpdateLessonRequest } from '../../models/requests/lesson/updatelessonrequest';
 import { UpdateLessonResponse } from '../../models/responses/lesson/updatelessonresponse';
+import { AddLessonContentRequest } from '../../models/requests/lesson/addlessoncontentrequest';
 
 @Injectable({
   providedIn: 'root'
@@ -35,6 +36,19 @@ export class InstructorLessonService extends InstructorLessonBaseService {
     const url = `${this.apiUrl}/bootcamp/${listLessonRequest.BootcampId}`;
     const params = { PageIndex: listLessonRequest.pageIndex.toString(), PageSize: listLessonRequest.pageSize.toString() };
   
+    return this.httpClient.get<ListLessonResponse>(url, { params }).pipe(
+      map(response => response),
+      catchError(responseError => {
+        throw responseError;
+      })
+    );
+  }
+
+
+  override getLessonlist(listLessonRequest: ListLessonRequest): Observable<ListLessonResponse> {
+    const url = `${this.apiUrl}/bootcamp/${listLessonRequest.BootcampId}`;
+    const params = { PageIndex: listLessonRequest.pageIndex.toString(), PageSize: listLessonRequest.pageSize.toString() };
+
     return this.httpClient.get<ListLessonResponse>(url, { params }).pipe(
       map(response => response),
       catchError(responseError => {
@@ -73,4 +87,5 @@ export class InstructorLessonService extends InstructorLessonBaseService {
       })
     );
   }
+ 
 }
