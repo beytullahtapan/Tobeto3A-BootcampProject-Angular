@@ -8,7 +8,6 @@ import { InstructorListDto } from '../../features/models/responses/instructor/in
 import { InstructorService } from '../../features/services/concretes/instructor.service';
 import { ActivatedRoute,RouterModule } from '@angular/router';
 import { GetBootcampsListResponse } from '../../features/models/responses/bootcamp/get-bootcamps-list-response';
-import { InstructorListGroupComponent } from "../../features/components/instructor-list-group/instructor-list-group.component";
 
 
 @Component({
@@ -16,7 +15,7 @@ import { InstructorListGroupComponent } from "../../features/components/instruct
     standalone: true,
     templateUrl: './bootcamp-list-page.component.html',
     styleUrl: './bootcamp-list-page.component.scss',
-    imports: [FormsModule, CommonModule, RouterModule, InstructorListGroupComponent]
+    imports: [FormsModule, CommonModule, RouterModule]
 })
 export class BootcampListPageComponent {
     currentPageNumber!: number;    
