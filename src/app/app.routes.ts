@@ -6,6 +6,7 @@ import { adminRoutes } from './admin/admin.routes';
 import { formConfirmExitGuard } from './core/guards/form/form-confirm-exit.guard';
 import { ContactComponent } from './pages/contact/contact-page.component';
 import { instructorRoutes } from './instructor/instructor.routes';
+import { ChatPageComponent } from './pages/chat-page/chat-page.component';
 
 
 export const routes: Routes = [
@@ -13,6 +14,7 @@ export const routes: Routes = [
    { path: 'login', component: LoginComponent },
    { path: 'register', component: RegisterComponent, canDeactivate:[formConfirmExitGuard] },
    { path:'contact',component:ContactComponent},
+   { path:'chat',component: ChatPageComponent},
 
    //Admin
    { path: 'admin', children: adminRoutes },

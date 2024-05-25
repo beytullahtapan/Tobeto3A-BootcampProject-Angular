@@ -1,0 +1,80 @@
+<section class="bg-white dark:bg-gray-300">
+<div class="container">
+    <div class="row clearfix">
+      <div>
+        <h1 class="alert alert-dark text-center mt-2">Teach It Free Chat</h1>
+      </div>
+        <div class="col-lg-12 mt-2">
+            <div class="card chat-app">
+                <div id="plist" class="people-list">
+                    <div class="input-group" style="position: relative;">                      
+                        <input type="text" class="form-control" placeholder="Search..." style="padding-left:35px;">
+                        <i class="fa fa-search" style="position: absolute; top:10px; left: 15px;"></i>
+                    </div>
+                    <ul class="list-unstyled chat-list mt-2 mb-0">
+                      @for(user of users; track user){
+                        <li class="clearfix" [ngClass]="selectedUserId == user.id ? 'active' : ''" (click)="changeUser(user)">
+                            <!-- <img src="https://bootdey.com/img/Content/avatar/{{user.avatar}}" alt="avatar"> -->
+                            <div class="about">
+                                <div class="name">{{user.firstName}} {{user.lastName}}</div>
+                                <div class="name">{{user.userName}}</div>
+                                <!-- <div class="status"> <i class="fa fa-circle" [ngClass]="user.status === 'online' ? 'online' : 'offline'"></i> {{user.status}} </div>                                             -->
+                            </div>
+                        </li>
+                      }                      
+                    </ul>
+                </div>
+                @if(selectedUserId){
+                  <div class="chat">
+                    <div class="chat-header clearfix">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <a href="javascript:void(0);" data-toggle="modal" data-target="#view_info">
+                                    <!-- <img src="https://bootdey.com/img/Content/avatar/{{selectedUser.avatar}}" alt="avatar"> -->
+                                </a>
+                                <div class="chat-about">
+                                    <h6 class="m-b-0">{{selectedUser.firstName}} {{selectedUser.lastName}} ({{selectedUser.userName}})</h6>
+                                    <!-- <small>{{selectedUser.status}}</small> -->
+                                </div>
+                            </div>                         
+                        </div>
+                    </div>
+                    <div class="chat-history" style="height: 600px;">
+                        <ul class="m-b-0">
+                          @for(chat of chats; track chat){
+                            @if(selectedUserId != chat.senderId){
+                                <li class="clearfix d-flex text-right" style="flex-direction: column; width: 100%; align-items:flex-end;">
+                                    <div class="message-data">                                
+                                        <span class="message-data-time">{{chat.createdDate}}</span>                                 
+                                    </div>
+                                    <div class="message other-message"> {{chat.content}} </div>
+                                </li>
+                            }@else {
+                                <li class="clearfix">
+                                    <div class="message-data">
+                                        <span class="message-data-time">{{chat.createdDate}}</span>
+                                    </div>
+                                    <div class="message my-message">{{chat.content}}</div>                                    
+                                </li>
+                            }                        
+                          }
+                        </ul>
+                    </div>
+                    <div class="p-4 border-t flex">
+                        <input [(ngModel)]="message" id="user-input" type="text" placeholder="Type a message" class="bg-white dark:bg-gray-100 w-full px-3 py-2 border-gray-900 rounded-l-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        <button (click)="sendMessage()" id="send-button" class="bg-blue-900 text-white px-4 py-2 rounded-r-md hover:bg-blue-600 transition duration-300">Send</button>
+                    </div>
+                </div>
+                }@else {
+                    <div class="chat">
+                        <div class="chat-header clearfix"></div>
+                    </div>
+                    <div class="chat-history" style="height: 600px;"></div>
+                    <div class="p-4 border-t flex"></div>
+                }
+                
+            </div>
+        </div>
+    </div>
+</div>
+</section>
