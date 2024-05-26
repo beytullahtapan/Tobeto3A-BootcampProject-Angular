@@ -1,13 +1,14 @@
 import { CommonModule } from '@angular/common';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { environment } from '../../../environments/environment';
 import { AuthBaseService } from '../../features/services/abstracts/auth-base.service';
-import { PaginatedList } from '../../core/models/paginated-list';
-import { LocalStorageService } from '../../features/services/concretes/local-storage.service';
 import { FormsModule } from '@angular/forms';
-import * as signalR from '@microsoft/signalR'
+import { ChatHubService } from '../../features/services/concretes/chat-hub.service';
+import { ChatUserResponse } from '../../features/models/responses/chat/chat-user-response';
+import { MessageResponse } from '../../features/models/responses/chat/send-message-response';
+import { SendMessageRequest } from '../../features/models/requests/chat/send-message-request';
+import { GetChatRequest } from '../../features/models/requests/chat/get-chat-request';
+import { ChatBaseService } from '../../features/services/abstracts/chat-base.service';
 
 @Component({
   selector: 'app-chat-page',
@@ -16,113 +17,83 @@ import * as signalR from '@microsoft/signalR'
   templateUrl: './chat-page.component.html',
   styleUrl: './chat-page.component.scss'
 })
-export class ChatPageComponent {
-  users: ChatUserModel[] = [];
-  chats: MessageModel[] = [];
+export class ChatPageComponent implements OnInit{
+  users: ChatUserResponse[] = [];
+  chats: MessageResponse[] = [];
   selectedUserId: string = "";
-  selectedUser: ChatUserModel = new ChatUserModel();
-  senderUser = new ChatUserModel();
+  selectedUser: ChatUserResponse = {id:"", userName: "", firstName: "", lastName:"", email: ""};
+  senderUser: ChatUserResponse = {id:"", userName: "", firstName: "", lastName:"", email: ""};
 
   message: string = "";  
-
-  hub: signalR.HubConnection | undefined;
   
-
-  private readonly apiUrl:string = `${environment.API_URL}/Chats`;
-  constructor(private httpClient: HttpClient, private authService: AuthBaseService, private storageService: LocalStorageService) {
+  constructor(
+    private chatService: ChatBaseService, 
+    private chatHubService: ChatHubService, 
+    private authService:AuthBaseService, 
+  ) {
     this.senderUser.id = authService.getCurrentUserId();
+  }
+
+  ngOnInit(): void {
     this.getChatUsers();
-
-
-    this.hub = new signalR.HubConnectionBuilder().withUrl("http://localhost:60805/Hubs/ChatHub").build();
-
-
-    this.hub.start().then(()=> {
-      console.log("Connection is started...");  
-      
-      this.hub?.invoke("Connect", this.senderUser.id);
-
-      this.hub?.on("Users", (res:ChatUserModel) => {
-        console.log(res);    
-      });
-
-      this.hub?.on("SendMessage",(res:MessageModel)=> {
-        //this.hub?.on("ChatChannel",(res:MessageModel)=> {
-        console.log(res);        
-        
-        if(this.selectedUserId == res.senderId){
-          this.chats.push(res);
-        }
-      })
-    })
-
-   }
+    this.initializeSignalR();
+  }
 
 
   getChatUsers(){
-
-    const authToken = 'Bearer ' + this.storageService.getToken();
-    const headers = new HttpHeaders().set('Authorization', authToken);
-
-
-    this.httpClient.get<PaginatedList<ChatUserModel>>(`${this.apiUrl}/GetChatHistory?UserId=${this.senderUser.id}`, {headers})
-    .subscribe(res => {
+    this.chatService.getChatUsers(this.senderUser.id).subscribe(res => {
       this.users = res.items;
-    })
+    });
   }
 
-  changeUser(user: ChatUserModel){
+  changeUser(user: ChatUserResponse){
     this.selectedUserId = user.id;
     this.selectedUser = user;
 
+    let userDto: GetChatRequest = {
+      'senderId': this.senderUser.id,
+      'receiverId': this.selectedUserId,
+      'pageRequest': {
+        page: 0, 
+        pageSize: 10 
+      }
+    }
 
-    const authToken = 'Bearer ' + this.storageService.getToken();
-    const headers = new HttpHeaders().set('Authorization', authToken);
-
-    this.httpClient.get<PaginatedList<MessageModel>>(
-      `${this.apiUrl}/GetChats?SenderId=${this.senderUser.id}&ReceiverId=${this.selectedUserId}&PageRequest.PageIndex=0&PageRequest.PageSize=10`,{ headers })
-    .subscribe((res:any)=>{
+    this.chatService
+    .getChats(userDto)
+    .subscribe(res => {
       this.chats = res.items;
     });
 
   }
 
   sendMessage(){
-    const data= {
+    let messageDto: SendMessageRequest = {
       "senderId": this.senderUser.id,
       "receiverId": this.selectedUserId,
       "content": this.message
     }
-    console.log(data);
 
-    const authToken = 'Bearer ' + this.storageService.getToken();
-    const headers = new HttpHeaders().set('Authorization', authToken);
-
-    this.httpClient.post<MessageModel>(`${this.apiUrl}/SendMessage`, data, {headers}).subscribe(
-      (res)=> {
+    this.chatService
+      .sendMessage(messageDto)
+      .subscribe(res => {
         this.chats.push(res);
-        this.message = "";
-      }
-    );
-
+        this.message = '';
+      });
   }
 
-}
+  private initializeSignalR() {
+    this.chatHubService.connect(this.senderUser.id);
 
+    this.chatHubService.onUsers(res => {
+      console.log(res);
+    });
 
-export class ChatUserModel{
-  id:string = "";
-  userName: string = "";
-  firstName: string = "";
-  lastName: string = "";
-  email: string = "";
-}
-
-export interface MessageModel{
-  id: string;
-  senderId: string ;
-  receiverId: string ;
-  createdDate: Date ;
-  content: string ;
-  isRead: boolean;
+    this.chatHubService.onSendMessage(res => {
+      if (this.selectedUserId == res.senderId) {
+        this.chats.push(res);
+      }
+    });
+  }
+  
 }
