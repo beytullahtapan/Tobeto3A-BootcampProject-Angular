@@ -9,6 +9,9 @@ import { SendMessageRequest } from '../../models/requests/chat/send-message-requ
 import { ChatUserResponse } from '../../models/responses/chat/chat-user-response';
 import { MessageResponse } from '../../models/responses/chat/send-message-response';
 import { GetChatRequest } from '../../models/requests/chat/get-chat-request';
+import { DeleteChatRequest } from '../../models/requests/chat/delete-chat-request';
+import { DeleteChatResponse } from '../../models/responses/chat/delete-chat-response';
+import { DeleteMessageResponse } from '../../models/responses/chat/delete-message-response';
 
 @Injectable({
   providedIn: 'root'
@@ -31,5 +34,13 @@ export class ChatService extends ChatBaseService{
 
     return this.httpClient.get<PaginatedList<MessageResponse>>(
       `${this.apiUrl}/GetChats?SenderId=${getChatRequest.senderId}&ReceiverId=${getChatRequest.receiverId}&PageRequest.PageIndex=${getChatRequest.pageRequest.page}&PageRequest.PageSize=${getChatRequest.pageRequest.pageSize}`);
+  }
+
+  override deleteChat(deleteChatRequest:DeleteChatRequest): Observable<DeleteChatResponse>{
+    return this.httpClient.post<DeleteChatResponse>(`${this.apiUrl}/DeleteChat`, deleteChatRequest);
+  }
+
+  override deleteMessage(id:number): Observable<DeleteMessageResponse>{
+    return this.httpClient.delete<DeleteMessageResponse>(`${this.apiUrl}/DeleteMessage/${id}`);
   }
 }

@@ -1,4 +1,4 @@
-<section class="bg-white dark:bg-gray-300">
+<section class="bg-white dark:bg-gray-900">
 <div class="container">
     <div class="row clearfix">
       <div>
@@ -7,70 +7,116 @@
         <div class="col-lg-12 mt-2">
             <div class="card chat-app">
                 <div id="plist" class="people-list">
-                    <div class="input-group" style="position: relative;">                      
+                    <!-- <div class="input-group" style="position: relative;">                      
                         <input type="text" class="form-control" placeholder="Search..." style="padding-left:35px;">
                         <i class="fa fa-search" style="position: absolute; top:10px; left: 15px;"></i>
-                    </div>
+                    </div> -->
                     <ul class="list-unstyled chat-list mt-2 mb-0">
                       @for(user of users; track user){
-                        <li class="clearfix" [ngClass]="selectedUserId == user.id ? 'active' : ''" (click)="changeUser(user)">
-                            <!-- <img src="https://bootdey.com/img/Content/avatar/{{user.avatar}}" alt="avatar"> -->
-                            <div class="about">
-                                <div class="name">{{user.firstName}} {{user.lastName}}</div>
-                                <div class="name">{{user.userName}}</div>
-                                <!-- <div class="status"> <i class="fa fa-circle" [ngClass]="user.status === 'online' ? 'online' : 'offline'"></i> {{user.status}} </div>                                             -->
-                            </div>
-                        </li>
+                        <div class="p-4 border-t flex">
+                            <li class="clearfix" [ngClass]="selectedUserId == user.id ? 'active' : ''" (click)="changeUser(user)">
+                                <!-- <img src="https://bootdey.com/img/Content/avatar/{{user.avatar}}" alt="avatar"> -->
+                            
+                                <div class="about text-gray-900 dark:text-gray-400">
+                                    <div class="name">{{user.firstName}} {{user.lastName}}</div>
+                                    <div class="name">{{user.userName}}</div>
+                                    <!-- <div class="status"> <i class="fa fa-circle" [ngClass]="user.status === 'online' ? 'online' : 'offline'"></i> {{user.status}} </div> -->
+                                </div>
+                                <button (click)="deleteChat(user.id); $event.stopPropagation()" id="delete-button" class="text-right p-2 text-sm font-medium text-center text-gray-900 bg-white rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none dark:text-white focus:ring-gray-50 dark:bg-gray-900 dark:hover:bg-gray-800 dark:focus:ring-gray-600" type="button">
+                                    <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                                        <path fill-rule="evenodd" d="M8.586 2.586A2 2 0 0 1 10 2h4a2 2 0 0 1 2 2v2h3a1 1 0 1 1 0 2v12a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V8a1 1 0 0 1 0-2h3V4a2 2 0 0 1 .586-1.414ZM10 6h4V4h-4v2Zm1 4a1 1 0 1 0-2 0v8a1 1 0 1 0 2 0v-8Zm4 0a1 1 0 1 0-2 0v8a1 1 0 1 0 2 0v-8Z" clip-rule="evenodd"/>
+                                    </svg>                                      
+                                </button> 
+                            
+                            
+                            </li> 
+                        </div> 
                       }                      
                     </ul>
                 </div>
                 @if(selectedUserId){
-                  <div class="chat">
-                    <div class="chat-header clearfix">
-                        <div class="row">
-                            <div class="col-lg-6">
+                    <div class="chat">
+                        <div class="chat-header clearfix bg-gray-200 dark:bg-gray-800">
+                            <div class="row">
+                              <div class="col-lg-6">
                                 <a href="javascript:void(0);" data-toggle="modal" data-target="#view_info">
-                                    <!-- <img src="https://bootdey.com/img/Content/avatar/{{selectedUser.avatar}}" alt="avatar"> -->
+                                  <!-- <img src="https://bootdey.com/img/Content/avatar/{{selectedUser.avatar}}" alt="avatar"> -->
                                 </a>
                                 <div class="chat-about">
-                                    <h6 class="m-b-0">{{selectedUser.firstName}} {{selectedUser.lastName}} ({{selectedUser.userName}})</h6>
-                                    <!-- <small>{{selectedUser.status}}</small> -->
+                                  <h6 class="m-b-0 text-gray-900 dark:text-white">{{selectedUser.firstName}} {{selectedUser.lastName}} ({{selectedUser.userName}})</h6>
+                                  <!-- <small>{{selectedUser.status}}</small> -->
                                 </div>
-                            </div>                         
+                              </div>
+                            </div>
+                          </div>
+                          <div class="chat-history" #chatHistory style="height: 600px;" (scroll)="onScroll($event)">
+                            <ul class="m-b-0">
+                              <ng-container *ngFor="let chat of chats; trackBy: trackById">
+                                <li *ngIf="selectedUserId !== chat.senderId">
+                                  <div class="flex items-start gap-2.5 justify-end" style="margin-bottom: 10px;">
+                                    <div class="flex flex-col w-full max-w-[320px] leading-1.5 p-4 border-gray-200 bg-blue-100 rounded-e-xl rounded-es-xl dark:bg-blue-700">
+                                      <div class="flex items-center space-x-2 rtl:space-x-reverse">
+                                        <span class="text-sm font-normal text-gray-500 dark:text-gray-400">{{chat.createdDate | date: 'dd/MM/yyyy HH:mm:ss'}}</span>
+                                      </div>
+                                      <p class="text-sm font-normal py-2.5 text-gray-900 dark:text-white">{{chat.content}}</p>
+                                      <span class="text-right font-normal text-gray-500 dark:text-gray-400">Delivered</span>
+                                    </div>
+                                    <button id="dropdownMenuIconButton" data-dropdown-toggle="dropdownDots" data-dropdown-placement="bottom-start" class="inline-flex self-center items-center p-2 text-sm font-medium text-center text-gray-900 bg-white rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none dark:text-white focus:ring-gray-50 dark:bg-gray-900 dark:hover:bg-gray-800 dark:focus:ring-gray-600" type="button">
+                                      <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 4 15">
+                                        <path d="M3.5 1.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Zm0 6.041a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Zm0 5.959a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Z"/>
+                                      </svg>
+                                    </button>
+                                    <div id="dropdownDots" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-40 dark:bg-gray-700 dark:divide-gray-600">
+                                      <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownMenuIconButton">
+                                        <li>
+                                          <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Copy</a>
+                                        </li>
+                                        <li>
+                                          <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Delete</a>
+                                        </li>
+                                      </ul>
+                                    </div>
+                                  </div>
+                                </li>
+                                <li *ngIf="selectedUserId === chat.senderId">
+                                  <div class="flex items-start gap-2.5" style="margin-bottom: 10px;">
+                                    <div class="flex flex-col w-full max-w-[320px] leading-1.5 p-4 border-gray-200 bg-gray-100 rounded-e-xl rounded-es-xl dark:bg-gray-700">
+                                      <div class="flex items-center space-x-2 rtl:space-x-reverse">
+                                        <span class="text-sm font-normal text-gray-500 dark:text-gray-400">{{chat.createdDate | date: 'dd/MM/yyyy HH:mm:ss'}}</span>
+                                      </div>
+                                      <p class="text-sm font-normal py-2.5 text-gray-900 dark:text-white">{{chat.content}}</p>
+                                      <span class="text-right font-normal text-gray-500 dark:text-gray-400">Delivered</span>
+                                    </div>
+                                    <button id="dropdownMenuIconButton" data-dropdown-toggle="dropdownDots" data-dropdown-placement="bottom-start" class="inline-flex self-center items-center p-2 text-sm font-medium text-center text-gray-900 bg-white rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none dark:text-white focus:ring-gray-50 dark:bg-gray-900 dark:hover:bg-gray-800 dark:focus:ring-gray-600" type="button">
+                                        <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 4 15">
+                                          <path d="M3.5 1.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Zm0 6.041a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Zm0 5.959a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Z"/>
+                                        </svg>
+                                      </button>
+                                      <div id="dropdownDots" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-40 dark:bg-gray-700 dark:divide-gray-600">
+                                        <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownMenuIconButton">
+                                          <li>
+                                            <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Copy</a>
+                                          </li>
+                                          <li>
+                                            <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Delete</a>
+                                          </li>
+                                        </ul>
+                                      </div>
+                                  </div>
+                                </li>
+                              </ng-container>
+                            </ul>
+                          </div>
+                        <div class="p-4 border-t flex">
+                          <input [(ngModel)]="message" id="user-input" type="text" placeholder="Type a message" class="bg-white dark:bg-gray-100 w-full px-3 py-2 border-gray-900 rounded-l-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                          <button (click)="sendMessage()" id="send-button" class="bg-blue-900 text-white px-4 py-2 rounded-r-md hover:bg-blue-600 transition duration-300">Send</button>
                         </div>
-                    </div>
-                    <div class="chat-history" style="height: 600px;">
-                        <ul class="m-b-0">
-                          @for(chat of chats; track chat){
-                            @if(selectedUserId != chat.senderId){
-                                <li class="clearfix d-flex text-right" style="flex-direction: column; width: 100%; align-items:flex-end;">
-                                    <div class="message-data">                                
-                                        <span class="message-data-time">{{chat.createdDate}}</span>                                 
-                                    </div>
-                                    <div class="message other-message"> {{chat.content}} </div>
-                                </li>
-                            }@else {
-                                <li class="clearfix">
-                                    <div class="message-data">
-                                        <span class="message-data-time">{{chat.createdDate}}</span>
-                                    </div>
-                                    <div class="message my-message">{{chat.content}}</div>                                    
-                                </li>
-                            }                        
-                          }
-                        </ul>
-                    </div>
-                    <div class="p-4 border-t flex">
-                        <input [(ngModel)]="message" id="user-input" type="text" placeholder="Type a message" class="bg-white dark:bg-gray-100 w-full px-3 py-2 border-gray-900 rounded-l-md focus:outline-none focus:ring-2 focus:ring-blue-500">
-                        <button (click)="sendMessage()" id="send-button" class="bg-blue-900 text-white px-4 py-2 rounded-r-md hover:bg-blue-600 transition duration-300">Send</button>
-                    </div>
-                </div>
+                      </div>
                 }@else {
                     <div class="chat">
                         <div class="chat-header clearfix"></div>
                     </div>
-                    <div class="chat-history" style="height: 600px;"></div>
-                    <div class="p-4 border-t flex"></div>
+                    <div class="chat-history" style="height: 60vh;"></div>
                 }
                 
             </div>
