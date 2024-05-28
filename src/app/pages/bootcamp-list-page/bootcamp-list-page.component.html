@@ -1,0 +1,40 @@
+<div class="mt-2 mb-3">
+    <input type="text" [(ngModel)]="filterText" class="border rounded px-4 py-2 w-full" id="filterText" placeholder="Bootcamp Ara" />
+</div>
+<div *ngIf="filterText" class="bg-green-100 text-green-800 p-2 rounded opacity-80">
+    "{{filterText}}" aradınız.
+</div>
+
+<ul class="list-group opacity-80 mt-4">
+    <li routerLink="/home-page" [class]="getDefaultBootcampClass()" class="cursor-pointer p-2 bg-gray-200 rounded mb-2">
+        Bootcamp Listesi
+    </li>
+</ul>
+
+<div class="mb-3 opacity-80">
+    <select class="form-select border rounded px-4 py-2 w-full" size="5" aria-label="Bootcamp listesi">
+        <option *ngFor="let bootcamp of bootcampList.items" 
+            (click)="setCurrentBootcamp(bootcamp)"
+            [class]="getCurrentBootcampClass(bootcamp)"
+            [routerLink]="'bootcamps/model/' + bootcamp.id"
+            class="bg-[#FCFBF5] cursor-pointer p-2 mb-1"
+        >
+            {{bootcamp.name}}
+        </option>
+    </select>
+</div>
+
+<div class="flex justify-between mt-4">
+    <button (click)="onPreviousPageClicked()" [disabled]="!bootcampList.hasPrevious" class="bg-blue-500 text-white px-4 py-2 rounded disabled:bg-gray-300">
+        Önceki
+    </button>
+    <span>Sayfa {{currentPageNumber}}</span>
+    <button (click)="onViewMoreClicked()" [disabled]="!bootcampList.hasNext" class="bg-blue-500 text-white px-4 py-2 rounded disabled:bg-gray-300">
+        Sonraki
+    </button>
+</div> 
+
+
+
+
+  

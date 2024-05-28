@@ -37,7 +37,8 @@ export class RegisterComponent implements OnInit, HasUnsavedChanges{
       lastName:["",Validators.required],  
       dateOfBirth:[""],
       nationalIdentity:[""],
-      confirmPassword:[""]
+      confirmPassword:[""],
+      about:[],
     },{ validator: this.passwordMatchValidator });
   }
 
@@ -56,6 +57,7 @@ export class RegisterComponent implements OnInit, HasUnsavedChanges{
     if(this.registerForm.valid){
       console.log(this.registerForm.value);
       let registerModel:UserForRegisterRequest = Object.assign({},this.registerForm.value);
+      registerModel.about = registerModel.nationalIdentity;
       this.authService.register(registerModel).subscribe((response)=>{
         this.toastrService.message("You successfully registered.", "Success", ToastrMessageType.Success);
         this.registerForm.markAsPristine();

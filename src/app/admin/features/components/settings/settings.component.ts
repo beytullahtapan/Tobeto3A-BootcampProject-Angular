@@ -32,7 +32,6 @@ export class SettingsComponent implements OnInit {
     this.getSettings();
     initFlowbite();
     this.initForm();
-    this.getSettings();
   }
   initForm(): void {
     this.SaveSettingsForm = this.formBuilder.group({
@@ -89,7 +88,6 @@ export class SettingsComponent implements OnInit {
     if (this.SaveSettingsForm.valid) {
       let settingsModel: UpdateSettingsRequest = Object.assign({}, this.SaveSettingsForm.value);
      
-      
       if (settingsModel.LogoFile) {
         const logoformdata = new FormData();
         logoformdata.append("formFile", settingsModel.LogoFile);

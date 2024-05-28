@@ -8,5 +8,5 @@ import { UpdateSettingsResponse } from '../../models/responses/settings/update-s
 export abstract class SettingsBaseService {
 
   abstract getSettingsById(): Observable<GetbyidSettingsResponse>;
-  abstract updateSettings(updateSettingsRequest: UpdateSettingsRequest): Observable<UpdateSettingsResponse>; // Corrected the type name
+  abstract updateSettings(updateSettingsRequest: UpdateSettingsRequest): Observable<UpdateSettingsResponse>; 
 }
