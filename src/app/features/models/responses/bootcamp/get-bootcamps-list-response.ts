@@ -6,10 +6,8 @@ export interface GetBootcampsListResponse {
     instructorLastName:string;
     startDate:Date;
     endDate:Date;
-    bootcampStateId: number;
-    bootcampStateName: string;
-    bootcampImageId: number;
-    bootcampImageImagePath: string;
+    bootcampState: Boolean;
+    bootcampImage: string;
     createdDate: Date;
     updatedDate: Date;
 }
