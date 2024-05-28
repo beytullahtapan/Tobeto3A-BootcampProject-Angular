@@ -9,6 +9,9 @@ import { provideAnimationsAsync } from "@angular/platform-browser/animations/asy
 import { CachingInterceptors } from "../../core/interceptors/cache/caching.interceptor";
 import { ErrorInterceptors } from "../../core/interceptors/error/error.interceptor";
 import { LoggingInterceptor } from "../../core/interceptors/logging/log.interceptor";
+import { ChatBaseService } from "../../features/services/abstracts/chat-base.service";
+import { ChatService } from "../../features/services/concretes/chat.service";
+import { ChatHubService } from "../../features/services/concretes/chat-hub.service";
 
 export function getAppProviders(){
     const authServiceProviders={
@@ -16,8 +19,16 @@ export function getAppProviders(){
         useClass:AuthService
     };
 
+    const chatServiceProviders={
+        provide:ChatBaseService,
+        useClass:ChatService
+    };
+
+
     return [
         authServiceProviders,
+        chatServiceProviders,
+        ChatHubService,
         provideAnimationsAsync(), // required animations providers
         provideToastr(), //Toastr providers
         provideRouter(routes),

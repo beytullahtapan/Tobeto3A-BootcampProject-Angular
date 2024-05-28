@@ -1,1 +1,4 @@
-export const environment = {API_URL:''};
+export const environment = {
+    API_URL:'',
+    SIGNALR_URL:''
+};
