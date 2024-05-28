@@ -44,7 +44,7 @@
             <th scope="col" class="px-6 py-3">Kurs Adı</th>
             <th scope="col" class="px-6 py-3">Eğitmen</th>
             <th scope="col" class="px-6 py-3">Kurs Durumu</th>
-            <th scope="col" class="px-6 py-3">İçerik</th>
+            <th scope="col" class="px-6 py-3">Dersler</th>
             <th scope="col" class="px-6 py-3">İşlemler</th>
           </tr>
         </thead>
@@ -56,7 +56,7 @@
               <td class="px-6 py-4">{{ item.bootcampState ? 'Aktif' : 'Pasif' }}</td>
               <td class="px-6 py-4">
                 <div>
-                 <a routerLink="/instructor/lesson/list/{{ item.id }}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline m-1">İçerikler</a>
+                 <a routerLink="/instructor/lesson/list/{{ item.id }}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline m-1">Dersler</a>
                 </div>
                </td>
               <td class="px-6 py-4">
