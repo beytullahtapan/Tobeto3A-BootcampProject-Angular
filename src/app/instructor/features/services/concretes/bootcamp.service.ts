@@ -37,7 +37,6 @@ export class InstructorBootcamp extends InstructorBootcampBaseService {
   override list(listBootcampRequest: ListBootcampRequest): Observable<ListBootcampResponse> {
     const url = `${this.apiUrl}/instructor/${listBootcampRequest.InstructorId}`;
     const params = { PageIndex: listBootcampRequest.pageIndex.toString(), PageSize: listBootcampRequest.pageSize.toString() };
-
     return this.httpClient.get<ListBootcampResponse>(url, { params }).pipe(
       map(response => response),
       catchError(responseError => {
@@ -53,6 +52,7 @@ export class InstructorBootcamp extends InstructorBootcampBaseService {
       map((response) => {
         const newResponse: GetbyIdBootcampResponse = {
          id: response.id,
+         description: response.description,
          instructorId: response.instructorId,
          name: response.name,
          bootcampState: response.bootcampState,

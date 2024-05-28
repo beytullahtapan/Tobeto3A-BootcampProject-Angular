@@ -47,6 +47,12 @@
                     <input  class="w-full bg-gray-800 rounded-md border-gray-700 text-white px-2 py-1 mt-2" id="bootcamp" type="text" formControlName="name">
                 </div>
             </div>
+            <div class="mt-4">
+              <div class="flex-1">
+                  <label class="text-white" for="bootcamp">Bootcamp Açıklaması<span class="text-[#C40C0C]">*</span></label>
+                  <input  class="w-full bg-gray-800 rounded-md border-gray-700 text-white px-2 py-1 mt-2" id="Description" type="text" formControlName="Description">
+              </div>
+          </div>
             <div class="mb-5">
               <label class="text-white" for="logoUrl">Bootcamp Resmi</label>
               <img class="h-auto max-w-xs" *ngIf="getbyIdBootcampResponse && getbyIdBootcampResponse.bootcampImage" [src]="getbyIdBootcampResponse.bootcampImage" >

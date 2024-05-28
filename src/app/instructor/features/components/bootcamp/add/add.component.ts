@@ -32,6 +32,7 @@ export class AddInstructorBootcampComponent implements OnInit  {
   initForm(): void {
     this.BootcampaddForm = this.formBuilder.group({
       Name: [""],
+      Description:[""],
       InstructorId: [""],  
       BootcampState: [true],
       BootcampImageFile: [null],

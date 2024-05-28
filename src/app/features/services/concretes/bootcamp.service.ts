@@ -1,10 +1,12 @@
 import { Injectable } from '@angular/core';
 import { BootcampBaseService } from '../abstracts/bootcamp-base.service';
-import { Observable, map } from 'rxjs';
+import { Observable, catchError, map } from 'rxjs';
 import { PageRequest } from '../../../core/models/page-request';
 import { BootcampListDto } from '../../models/responses/bootcamp/bootcamp-list-item-dto';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../../environments/environment.development';
+import { ListBootcampResponse } from '../../models/responses/bootcamp/get-bootcamps-response';
+import { ListBootcampRequest } from '../../models/requests/bootcamp/get-bootcamp-request';
 
 @Injectable({
   providedIn: 'root'
@@ -63,6 +65,20 @@ export class BootcampService extends BootcampBaseService {
         return newResponse;
       })
       )
+    }
+
+
+
+
+    override GetBootcamp(listBootcampRequest:ListBootcampRequest): Observable<ListBootcampResponse> {
+      const url = `${this.apiUrl}`;
+     const params = { PageIndex: listBootcampRequest.pageIndex.toString(), PageSize: listBootcampRequest.pageSize.toString() };
+      return this.httpClient.get<ListBootcampResponse>(url, { params }).pipe(
+        map(response => response),
+        catchError(responseError => {
+          throw responseError;
+        })
+      );
     }
   
 }

@@ -40,10 +40,16 @@
         <div class="mt-4 flex flex-col bg-gray-900 rounded-lg p-4 shadow-sm">
           <form [formGroup]="BootcampaddForm" enctype="multipart/form-data">
             <h2 class="text-white font-bold text-lg">Yeni Eğitim Ekleme</h2>
-            <div class="mt-4">
+              <div class="mt-4">
+                  <div class="flex-1">
+                      <label class="text-white" for="bootcamp">Bootcamp Adı<span class="text-[#C40C0C]">*</span></label>
+                      <input placeholder="Bootcamp Adı" class="w-full bg-gray-800 rounded-md border-gray-700 text-white px-2 py-1 mt-2" id="bootcamp" type="text" formControlName="Name">
+                  </div>
+              </div>
+              <div class="mt-4">
                 <div class="flex-1">
-                    <label class="text-white" for="bootcamp">Bootcamp Adı<span class="text-[#C40C0C]">*</span></label>
-                    <input placeholder="Bootcamp Adı" class="w-full bg-gray-800 rounded-md border-gray-700 text-white px-2 py-1 mt-2" id="bootcamp" type="text" formControlName="Name">
+                    <label class="text-white" for="bootcamp">Bootcamp Açıklaması<span class="text-[#C40C0C]">*</span></label>
+                    <input placeholder="Bootcamp Adı" class="w-full bg-gray-800 rounded-md border-gray-700 text-white px-2 py-1 mt-2" id="description" type="text" formControlName="Description">
                 </div>
             </div>
               <div class="mb-5">

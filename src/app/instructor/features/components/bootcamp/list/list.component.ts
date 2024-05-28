@@ -19,7 +19,7 @@ import { catchError, mergeMap, switchMap, tap } from 'rxjs';
   styleUrls: ['./list.component.scss'],
 })
 export class ListInstructorBootcampComponent implements OnInit {
-  bootcamps: ListBootcampResponse[] | null = null; // Specify the type here
+  bootcamps: ListBootcampResponse[] | null = null; 
   bootcampForm: FormGroup;
   error: any;
 
