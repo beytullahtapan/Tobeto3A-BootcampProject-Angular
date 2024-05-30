@@ -7,5 +7,5 @@ export interface CreateApplicantRequest {
     nationalIdentity:string;
     email:string;
     password:string;
-    updatedDate:Date;
+    createdDate:Date;
 }

@@ -3,4 +3,6 @@ export interface DeleteApplicantResponse {
     userName: string;
     firstName:string;
     lastName:string;
+    about:string;
+    deletedDate:Date;
 }
