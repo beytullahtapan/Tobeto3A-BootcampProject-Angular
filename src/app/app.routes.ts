@@ -16,6 +16,7 @@ import { ProfileSettingsComponent } from './pages/profile-settings/profile-setti
 import { MyBootcampsComponent } from './pages/my-bootcamps/my-bootcamps.component';
 
 
+
 export const routes: Routes = [
    { path: '', component: HomePageComponent }, 
    { path: 'login', component: LoginComponent },
@@ -24,6 +25,7 @@ export const routes: Routes = [
    { path:'chat',component: ChatPageComponent},
    { path:'bootcamps',component:BootcampListPageComponent},
    { path:'announcements', component:AnnouncementsComponent},
+
    {path:'privacy-policy',component:PrivacyPolicyComponent},
    {path:'profile',component:ProfileComponent},
    {path:'account-setting',component:AccountSettingsComponent},
