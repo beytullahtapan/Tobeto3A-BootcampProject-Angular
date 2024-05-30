@@ -8,5 +8,6 @@ export interface CreateApplicantResponse {
     nationalIdentity:string;
     email:string;
     password:string;
+    createdDate:Date;
     updatedDate:Date;
 }
