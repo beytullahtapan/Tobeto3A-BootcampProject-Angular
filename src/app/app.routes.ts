@@ -13,8 +13,12 @@ import { PrivacyPolicyComponent } from './pages/privacy-policy/privacy-policy.co
 import { ProfileComponent } from './pages/profile/profile.component';
 import { AccountSettingsComponent } from './pages/account-settings/account-settings.component';
 import { ProfileSettingsComponent } from './pages/profile-settings/profile-settings/profile-settings.component';
+<<<<<<< HEAD
 import { MyBootcampsComponent } from './pages/my-bootcamps/my-bootcamps.component';
 import { ViewbootcampComponent } from './pages/viewbootcamp/viewbootcamp.component';
+=======
+
+>>>>>>> a8273b99586305ac03130cc8bc1307d92e40fcbd
 
 
 
@@ -31,8 +35,12 @@ export const routes: Routes = [
    {path:'profile',component:ProfileComponent},
    {path:'account-setting',component:AccountSettingsComponent},
    {path:'profile-settings',component:ProfileSettingsComponent},
+<<<<<<< HEAD
    {path:'my-bootcamps',component:MyBootcampsComponent},
    {path:'viewbootcamp/:id',component:ViewbootcampComponent},
+=======
+   
+>>>>>>> a8273b99586305ac03130cc8bc1307d92e40fcbd
    //Admin
    { path: 'admin', children: adminRoutes },
    //Instructor
