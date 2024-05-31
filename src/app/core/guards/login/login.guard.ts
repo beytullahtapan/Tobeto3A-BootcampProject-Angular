@@ -13,8 +13,9 @@ export const loginGuard: CanActivateFn = (route:ActivatedRouteSnapshot, state:Ro
     return true;
   }
   else{
-    router.navigate(["login"],{queryParams: { returnUrl: state.url }});
+    router.navigate(['/login']);
     toastrService.message("You must log in to view this page!", "Info", ToastrMessageType.Info);
+    
     return false;
   }
 

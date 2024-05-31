@@ -16,6 +16,9 @@ import { AccountSettingsComponent } from './pages/account-settings/account-setti
 import { ProfileSettingsComponent } from './pages/profile-settings/profile-settings/profile-settings.component';
 import { ViewbootcampComponent } from './pages/viewbootcamp/viewbootcamp.component';
 import { MaintenanceComponent } from './pages/maintenance/maintenance.component';
+import { loginGuard } from './core/guards/login/login.guard';
+import { roleGuard } from './core/guards/role/role.guard';
+import { AuthRoleType } from './features/constants/auth-role-type';
 
 
 
@@ -25,20 +28,30 @@ export const routes: Routes = [
    { path: 'login', component: LoginComponent },
    { path: 'register', component: RegisterComponent, canDeactivate:[formConfirmExitGuard] },
    { path:'contact',component:ContactComponent},
-   { path:'chat',component: ChatPageComponent},
+   { path:'chat',component: ChatPageComponent, canActivate:[loginGuard]},
    { path:'bootcamps',component:BootcampListPageComponent},
-   { path:'inst-profile/:instructorId',component: InstructorPageComponent},
-   { path:'announcements', component:AnnouncementsComponent},
+   { path:'inst-profile/:instructorId',component: InstructorPageComponent ,canActivate:[loginGuard]},
+   { path:'announcements', component:AnnouncementsComponent ,canActivate:[loginGuard]},
    {path:'privacy-policy',component:PrivacyPolicyComponent},
-   {path:'profile',component:ProfileComponent},
-   {path:'account-setting',component:AccountSettingsComponent},
-   {path:'profile-settings',component:ProfileSettingsComponent},
+   {path:'profile',component:ProfileComponent ,canActivate:[loginGuard]},
+   {path:'account-setting',component:AccountSettingsComponent ,canActivate:[loginGuard]},
+   {path:'profile-settings',component:ProfileSettingsComponent ,canActivate:[loginGuard]},
    {path:'viewbootcamp/:id',component:ViewbootcampComponent},
    {path:'maintenance',component:MaintenanceComponent},
    //Admin
-   { path: 'admin', children: adminRoutes },
+   { path: 'admin', canActivate:[roleGuard], data: {expectedRoles: [AuthRoleType.Admin]}, children: adminRoutes},
+
    //Instructor
-   { path: 'instructor', children: instructorRoutes },
+   { 
+      path: 'instructor', 
+      canActivate: [roleGuard], 
+      data: { 
+        expectedRoles: [AuthRoleType.Admin]
+      }, 
+      children: instructorRoutes 
+    }
+
+   
 
    
 ];
