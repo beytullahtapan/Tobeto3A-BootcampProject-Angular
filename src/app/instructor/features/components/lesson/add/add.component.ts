@@ -82,20 +82,16 @@ export class AddInstructorLessonComponent implements OnInit {
   Addlesson(): void {
     if (this.LessonaddForm.valid) {
         let addLessonModel: AddLessonRequest = Object.assign({}, this.LessonaddForm.value);
-
-        // Add the lesson
         this.lessonService.add(addLessonModel).subscribe(
             (lessonResponse) => {
                 const lessonId = lessonResponse.id;
 
-                // Create lesson content request object
                 let addLessonContentRequest: AddLessonContentRequest = {
                     text: 'İçerik Buraya Gelcek',
                     videoUrl: 'Video Linki Buraya gelecek',
                     lessonId: lessonId
                 };
 
-                // Add the lesson content
                 this.lessonContentService.add(addLessonContentRequest).subscribe(
                     () => {
                         this.toastrService.message("Lesson and content successfully added.", "Success", ToastrMessageType.Success);

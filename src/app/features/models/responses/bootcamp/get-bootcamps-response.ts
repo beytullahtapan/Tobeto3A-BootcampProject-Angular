@@ -16,4 +16,5 @@ export interface BootcampItem {
     bootcampImage:string,
     instructorId: string;
     bootcampState: boolean;
+    isRegistered?: boolean;
 }

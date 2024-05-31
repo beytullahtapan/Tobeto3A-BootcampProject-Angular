@@ -9,6 +9,8 @@ import { UpdateApplicantRequest } from '../../../../features/models/requests/app
 import { TokenModel } from '../../../../features/models/responses/users/token-model';
 import { UpdateEmployeeResponse } from '../../../../features/models/responses/employee/update-employee-response';
 import { UpdateSettingsRequest } from '../../models/requests/settings/update-settings-request';
+import { UpdateSettingsImageRequest } from '../../models/requests/settings/update-image-request';
+import { UpdateSettingsImageResponse } from '../../models/responses/settings/update-image-response';
 
 @Injectable({
   providedIn: 'root'
@@ -56,5 +58,13 @@ export class SettingsService extends SettingsBaseService {
     );
   }
   
+  override deleteimage(updateSettingsImageRequest: UpdateSettingsImageRequest): Observable<UpdateSettingsImageResponse> {
+    return this.httpClient.post<UpdateSettingsImageResponse>(`${this.apiUrl}/DeleteImage`, updateSettingsImageRequest).pipe(
+      map(response => response),
+      catchError(responseError => {
+        throw responseError;
+      })
+    );
+  }
 
 }
