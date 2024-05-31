@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { initFlowbite } from 'flowbite';
-import { ListBootcampResponse } from '../../../models/responses/bootcamp/listbootcampresponse';
+import { BootcampItem } from '../../../models/responses/bootcamp/listbootcampresponse';
 import { ListBootcampRequest } from '../../../models/requests/bootcamp/listbootcamprequest';
 import { InstructorBootcamp } from '../../../services/concretes/bootcamp.service';
 import { AuthService } from '../../../../../features/services/concretes/auth.service';
@@ -10,6 +10,8 @@ import { UserService } from '../../../../../features/services/concretes/user.ser
 import { RouterModule } from '@angular/router';
 import { DeleteBootcampImageRequest } from '../../../models/requests/bootcamp/deletebootcampımagerequest';
 import { catchError, mergeMap, switchMap, tap } from 'rxjs';
+import { BootcampListDto } from '../../../../../features/models/responses/bootcamp/bootcamp-list-item-dto';
+import { PageRequest } from '../../../../../core/models/page-request';
 
 @Component({
   selector: 'app-list',
@@ -19,9 +21,21 @@ import { catchError, mergeMap, switchMap, tap } from 'rxjs';
   styleUrls: ['./list.component.scss'],
 })
 export class ListInstructorBootcampComponent implements OnInit {
-  bootcamps: ListBootcampResponse[] | null = null; 
+  bootcamps: BootcampItem[] | any = null; 
   bootcampForm: FormGroup;
   error: any;
+  currentPageNumber!: number; 
+  readonly PAGE_SIZE = 10;
+  bootcampList: BootcampListDto = {
+    index: 0,
+    size: 0,
+    count: 0,
+    hasNext: false,
+    hasPrevious: false,
+    pages: 0,
+    items: []
+  }; 
+
 
   constructor(
     private bootcampService: InstructorBootcamp,
@@ -38,20 +52,19 @@ export class ListInstructorBootcampComponent implements OnInit {
 
   ngOnInit(): void {
     initFlowbite();
-    this.loadBootcamps();
+    this.loadBootcamps({ page: 0, pageSize: this.PAGE_SIZE })
   }
 
 
-  loadBootcamps(): void {
+  loadBootcamps(pageRequest: PageRequest): void {
     const instructorId = this.autService.getCurrentUserId();
-    const request: ListBootcampRequest = { InstructorId: instructorId, pageIndex: 0, pageSize: 5 };
-    this.bootcampService.list(request).subscribe(
+    this.bootcampService.list(pageRequest,instructorId).subscribe(
       (response) => {
         if (response) {
           response.items.forEach(bootcamp => {
             this.userService.userinfo({ ıd: bootcamp.instructorId }).subscribe(
               (userInfoResponse) => {
-                bootcamp.InsturctorName = `${userInfoResponse.firstName} ${userInfoResponse.lastName}`;
+                bootcamp.instructorName = `${userInfoResponse.firstName} ${userInfoResponse.lastName}`;
               },
               (error) => {
                 console.error('Error fetching user info', error);
@@ -59,6 +72,7 @@ export class ListInstructorBootcampComponent implements OnInit {
             );
           });
           this.bootcamps = [response];
+          this.bootcampList = response; 
 
         } else {
           console.error('Response or items array is null.');
@@ -70,6 +84,7 @@ export class ListInstructorBootcampComponent implements OnInit {
       }
     );
   }
+
   DeleteBootcamp(bootcampId: number): void {
     if (confirm("Bu bootcamp'i silmek istediğinizden emin misiniz?")) {
       this.bootcampService.getBootcampById(bootcampId).pipe(
@@ -90,7 +105,7 @@ export class ListInstructorBootcampComponent implements OnInit {
       ).subscribe(
         (response) => {
           console.log("Bootcamp deleted successfully: ", response);
-          this.loadBootcamps(); // Bootcamps listesini yeniden yükleyin
+          this.loadBootcamps({ page: 0, pageSize: this.PAGE_SIZE })
         },
         (error) => {
           console.error('Error deleting bootcamp:', error);
@@ -98,7 +113,23 @@ export class ListInstructorBootcampComponent implements OnInit {
       );
     }
   }
+  onViewMoreClicked(): void {
+    const nextPageIndex = this.bootcampList.index + 1;
+    const pageSize = this.bootcampList.size;
+    this.loadBootcamps({ page: nextPageIndex, pageSize });
+    this.updateCurrentPageNumber();     
+  }
 
+  onPreviousPageClicked(): void {
+    const previousPageIndex = this.bootcampList.index - 1;
+    const pageSize = this.bootcampList.size;
+    this.loadBootcamps({ page: previousPageIndex, pageSize });
+    this.updateCurrentPageNumber();               
+  }
+
+  updateCurrentPageNumber(): void {
+    this.currentPageNumber = this.bootcampList.index + 1;
+  }
 
 
   

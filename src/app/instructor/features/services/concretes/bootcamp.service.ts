@@ -14,6 +14,8 @@ import { DeleteBootcampImageRequest } from '../../models/requests/bootcamp/delet
 import { DeleteBootcampImageResponse } from '../../models/responses/bootcamp/deletebootcampımageresponse';
 import { ListLessonRequest } from '../../models/requests/lesson/listlessonrequest';
 import { ListLessonResponse } from '../../models/responses/lesson/listlessonresponse';
+import { PageRequest } from '../../../../core/models/page-request';
+import { BootcampListDto } from '../../../../features/models/responses/bootcamp/bootcamp-list-item-dto';
 @Injectable({
   providedIn: 'root'
 })
@@ -34,16 +36,28 @@ export class InstructorBootcamp extends InstructorBootcampBaseService {
   }
 
 
-  override list(listBootcampRequest: ListBootcampRequest): Observable<ListBootcampResponse> {
-    const url = `${this.apiUrl}/instructor/${listBootcampRequest.InstructorId}`;
-    const params = { PageIndex: listBootcampRequest.pageIndex.toString(), PageSize: listBootcampRequest.pageSize.toString() };
-    return this.httpClient.get<ListBootcampResponse>(url, { params }).pipe(
-      map(response => response),
-      catchError(responseError => {
-        throw responseError;
+  override list(pageRequest: PageRequest, instructorId: String): Observable<BootcampListDto> {
+    const url = `${this.apiUrl}/instructor/${instructorId}`;
+    const newRequest: {[key: string]: string | number} = {
+      pageIndex: pageRequest.page,
+      pageSize: pageRequest.pageSize
+    };
+    return this.httpClient.get<BootcampListDto>(url, { params: newRequest }).pipe(
+      map((response) => {
+        const newResponse: BootcampListDto = {
+          index: pageRequest.page,
+          size: pageRequest.pageSize,
+          count: response.count,
+          hasNext: response.hasNext,
+          hasPrevious: response.hasPrevious,
+          items: response.items,
+          pages: response.pages
+        };
+        return newResponse;
       })
     );
   }
+  
 
   
 

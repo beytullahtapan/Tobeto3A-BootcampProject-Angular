@@ -1,5 +1,5 @@
 export interface GetByidLessonResponse {
-    id: string;
+    id: number;
     title:string,
     bootcampId: number;
     bootcampName:string;

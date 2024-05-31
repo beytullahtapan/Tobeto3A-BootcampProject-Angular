@@ -1,79 +1,51 @@
 <div class="grid grid-cols-1 sm:grid-cols-4 gap-10 mt-5">
-<<<<<<< HEAD
   <div class="col-span-1">
     <div class="p-4 bg-white shadow-lg rounded">
       <h2 class="text-lg font-medium mb-4">Filtreleme</h2>
     </div>
   </div>
-  <div class="col-span-3 grid grid-cols-1 sm:grid-cols-3 gap-10">
-    <div *ngFor="let bootcamp of bootcamps" class="rounded overflow-hidden shadow-lg flex flex-col">
-      <div class="relative" routerLink="/viewbootcamp/{{ bootcamp.id }}">
-        <img class="w-full h-48 object-cover" [src]="bootcamp.bootcampImage + '?auto=compress&cs=tinysrgb&dpr=1&w=500'" alt="Bootcamp Image">
-        <div class="hover:bg-transparent transition duration-300 absolute bottom-0 top-0 right-0 left-0 bg-gray-900 opacity-25"></div>
-        <div 
-          [ngClass]="{
-            'bg-indigo-600 text-white': bootcamp.bootcampState,
-            'bg-red-600 text-white': !bootcamp.bootcampState
-          }"
-          class="text-xs absolute top-0 right-0 px-4 py-2 mt-3 mr-3 hover:bg-white hover:text-indigo-600 transition duration-500 ease-in-out">
-          Başvuru Durumu: {{ bootcamp.bootcampState ? 'Aktif' : 'Pasif' }}
-=======
-    <div class="col-span-1">
-      <div class="p-4 bg-white shadow-lg rounded">
-        <h2 class="text-lg font-medium mb-4">Filtreleme</h2>
-        <div>
-          <label class="block text-gray-700 text-sm font-bold mb-2" for="instructor">
-            Eğitmen
-          </label>
-          <select id="countries" (change)="onInstructorChange($event)" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-            <option value="">Eğitmen Seçimi</option>
-            <option *ngFor="let instructor of instructors?.items" [value]="instructor.id">{{ instructor.firstName
-            }} {{ instructor.lastName }}</option>
-          </select>
+  <div class="col-span-3">
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-10">
+      <div *ngFor="let bootcamp of bootcamps" class="rounded overflow-hidden shadow-lg flex flex-col">
+        <a routerLink="/viewbootcamp/{{ bootcamp.id }}"></a>
+        <div class="relative">
+          <a routerLink="/viewbootcamp/{{ bootcamp.id }}">
+            <img class="w-full h-48 object-cover" [src]="bootcamp.bootcampImage + '?auto=compress&cs=tinysrgb&dpr=1&w=500'" alt="Bootcamp Image">
+            <div class="hover:bg-transparent transition duration-300 absolute bottom-0 top-0 right-0 left-0 bg-gray-900 opacity-25"></div>
+          </a>
+          <div 
+            [ngClass]="{
+              'bg-indigo-600 text-white': bootcamp.bootcampState,
+              'bg-red-600 text-white': !bootcamp.bootcampState
+            }"
+            class="text-xs absolute top-0 right-0 px-4 py-2 mt-3 mr-3 hover:bg-white hover:text-indigo-600 transition duration-500 ease-in-out">
+            Başvuru Durumu: {{ bootcamp.bootcampState ? 'Aktif' : 'Pasif' }}
+          </div>
         </div>
-        <div class="mt-4">
-          <label class="block text-gray-700 text-sm font-bold mb-2" for="course">
-            Ders
-          </label>
-          <select id="countries" (change)="onBootcampChange($event)" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-            <option value="">Ders Seçimi</option>
-            <option *ngFor="let bootcamp of bootcamps" [value]="bootcamp.id">{{ bootcamp.name }}</option>
-          </select>
->>>>>>> a8273b99586305ac03130cc8bc1307d92e40fcbd
+        <div class="px-6 py-4 mb-auto">
+          <a routerLink="/viewbootcamp/{{ bootcamp.id }}"class="font-medium text-lg inline-block hover:text-indigo-600 transition duration-500 ease-in-out inline-block mb-2">{{ bootcamp.name }}</a>
+          <p class="text-gray-500 text-sm">{{ bootcamp.description }}</p>
         </div>
-        <div class="mt-4">
-          <button (click)="applyFilters()" class="bg-blue-500 text-white px-4 py-2 rounded">Filtrele</button>
+        <div class="px-6 py-3 flex flex-row items-center justify-between bg-gray-100">
+          <span routerLink="/viewbootcamp/{{ bootcamp.id }}" class="py-1 text-xs font-regular text-gray-900 mr-1 flex flex-row items-center">
+            <span class="ml-1">Eğitmen: {{ bootcamp.InsturctorName }}</span>
+          </span>
+          <span routerLink="/viewbootcamp/{{ bootcamp.id }}" class="py-1 text-xs font-regular text-gray-900 mr-1 flex flex-row items-center">
+            <span class="py-1 text-xs font-regular text-gray-900 mr-1 flex flex-row items-center">
+              <button *ngIf="!bootcamp.isRegistered" (click)="applyToBootcamp(bootcamp.id)" type="button" class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800 w-36">Başvur</button>
+              <span *ngIf="bootcamp.isRegistered" class="focus:outline-none text-white bg-gray-700 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-600 w-36 text-center">Kayıtlısınız</span>
+            </span>
+          </span>
         </div>
-      </div>
-      <div class="px-5 py-4 mb-auto">
-        <a routerLink="/viewbootcamp/{{ bootcamp.id }}" class="font-medium text-lg inline-block hover:text-indigo-600 transition duration-500 ease-in-out mb-2">
-           {{ bootcamp.name }}
-        </a>
-        <p class="text-gray-500 text-sm">
-          {{ bootcamp.description }}
-        </p>
-      </div>
-      <div class="px-6 py-3 flex flex-row items-center justify-between bg-gray-100">
-        <span class="py-1 text-xs font-regular text-gray-900 mr-1 flex flex-row items-center">
-          <span class="ml-1">Eğitmen: {{ bootcamp.InsturctorName }}</span>
-        </span>
-        <span class="py-1 text-xs font-regular text-gray-900 mr-1 flex flex-row items-center">
-          <button *ngIf="!bootcamp.isRegistered" (click)="applyToBootcamp(bootcamp.id)" type="button" class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800 w-36">Başvur</button>
-          <span *ngIf="bootcamp.isRegistered" class="focus:outline-none text-white bg-gray-700 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-600 w-36 text-center">Kayıtlısınız</span>
-        </span>
       </div>
     </div>
+    <div class="flex justify-between mt-4">
+      <button (click)="onPreviousPageClicked()" [disabled]="!bootcampList.hasPrevious" class="bg-blue-500 text-white px-4 py-2 rounded disabled:bg-gray-300">
+          Önceki
+      </button>
+      <button (click)="onViewMoreClicked()" [disabled]="!bootcampList.hasNext" class="bg-blue-500 text-white px-4 py-2 rounded disabled:bg-gray-300">
+          Sonraki
+      </button>
+    </div>
   </div>
-<<<<<<< HEAD
 </div>
-=======
-  <div class="flex justify-between mt-4">
-    <button (click)="onPreviousPageClicked()" [disabled]="!bootcampList.hasPrevious" class="bg-blue-500 text-white px-4 py-2 rounded disabled:bg-gray-300">
-        Önceki
-    </button>
-    <button (click)="onViewMoreClicked()" [disabled]="!bootcampList.hasNext" class="bg-blue-500 text-white px-4 py-2 rounded disabled:bg-gray-300">
-        Sonraki
-    </button>
-</div> 
-  
->>>>>>> a8273b99586305ac03130cc8bc1307d92e40fcbd
