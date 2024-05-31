@@ -75,15 +75,10 @@ export class BootcampService extends BootcampBaseService {
   }
 
    override getBootcampListByInstructorId(pageRequest: PageRequest, instructorId: string): Observable<BootcampListDto> {
-    const newRequest: {[key: string]: string | number} = {
-      pageIndex: pageRequest.page,
-      pageSize: pageRequest.pageSize,
-      instructorId: instructorId,
-    };
   
-    return this.httpClient.get<BootcampListDto>(`${this.apiUrl}/getbootcampbyinstructorid`, {
-      params: newRequest
-    }).pipe(
+    return this.httpClient.get<BootcampListDto>
+    (`${this.apiUrl}/instructor/${instructorId}?PageIndex=${pageRequest.page}&PageSize=${pageRequest.pageSize}`)
+    .pipe(
       map((response)=>{
         const newResponse:BootcampListDto={
           index:pageRequest.page,

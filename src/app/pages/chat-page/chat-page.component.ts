@@ -1,15 +1,14 @@
 import { CommonModule } from '@angular/common';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { ActivatedRoute, Router, RouterOutlet } from '@angular/router';
 import { AuthBaseService } from '../../features/services/abstracts/auth-base.service';
 import { FormsModule } from '@angular/forms';
 import { ChatHubService } from '../../features/services/concretes/chat-hub.service';
 import { ChatUserResponse } from '../../features/models/responses/chat/chat-user-response';
 import { MessageResponse } from '../../features/models/responses/chat/send-message-response';
 import { SendMessageRequest } from '../../features/models/requests/chat/send-message-request';
-import { GetChatRequest } from '../../features/models/requests/chat/get-chat-request';
 import { ChatBaseService } from '../../features/services/abstracts/chat-base.service';
-import { initDropdowns, initFlowbite } from 'flowbite';
+import { initFlowbite } from 'flowbite';
 import { DeleteChatRequest } from '../../features/models/requests/chat/delete-chat-request';
 import { MatDialog } from '@angular/material/dialog';
 import { DeleteConfirmDialogComponent } from '../../features/components/delete-confirm-dialog/delete-confirm-dialog.component';
@@ -42,6 +41,8 @@ export class ChatPageComponent implements OnInit{
     private chatHubService: ChatHubService, 
     private authService:AuthBaseService, 
     private dialog: MatDialog,
+    private router: Router,
+    private route: ActivatedRoute
   ) {
     this.senderUser.id = authService.getCurrentUserId();
   }
@@ -50,6 +51,24 @@ export class ChatPageComponent implements OnInit{
     initFlowbite();
     this.getChatUsers();
     this.initializeSignalR();
+    this.checkForUserToAdd();
+  }
+
+
+  checkForUserToAdd() {
+    this.route.queryParams.subscribe(params => {
+      const userToAdd: ChatUserResponse = history.state.userToAdd;
+      if (userToAdd) {
+        this.addUserToChat(userToAdd);
+      }
+    });
+  }
+
+  addUserToChat(user: ChatUserResponse) {
+    if (!this.users.some(u => u.id == user.id)) {
+      this.users.push(user);
+    }
+    this.changeUser(user);
   }
 
 

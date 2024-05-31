@@ -51,7 +51,7 @@
         </div>
         <div class="px-6 py-3 flex flex-row items-center justify-between bg-gray-100">
           <span class="py-1 text-xs font-regular text-gray-900 mr-1 flex flex-row items-center">
-            <span class="ml-1">Eğitmen: {{ bootcamp.InsturctorName }}</span>
+            <a [routerLink]="['/inst-profile', bootcamp.instructorId]">Eğitmen: {{ bootcamp.InsturctorName }}</a>
           </span>
           <span class="py-1 text-xs font-regular text-gray-900 mr-1 flex flex-row items-center">
             <svg class="h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">

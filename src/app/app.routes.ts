@@ -9,6 +9,7 @@ import { instructorRoutes } from './instructor/instructor.routes';
 import { ChatPageComponent } from './pages/chat-page/chat-page.component';
 import { BootcampListPageComponent } from './pages/bootcamp-list-page/bootcamp-list-page.component';
 import { AnnouncementsComponent } from './pages/announcements/announcements.component';
+import { InstructorPageComponent } from './pages/instructor-page/instructor-page.component';
 import { PrivacyPolicyComponent } from './pages/privacy-policy/privacy-policy.component';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { AccountSettingsComponent } from './pages/account-settings/account-settings.component';
@@ -24,6 +25,7 @@ export const routes: Routes = [
    { path:'contact',component:ContactComponent},
    { path:'chat',component: ChatPageComponent},
    { path:'bootcamps',component:BootcampListPageComponent},
+   { path:'inst-profile/:instructorId',component: InstructorPageComponent},
    { path:'announcements', component:AnnouncementsComponent},
 
    {path:'privacy-policy',component:PrivacyPolicyComponent},

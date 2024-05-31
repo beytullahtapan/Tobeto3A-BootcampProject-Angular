@@ -1,0 +1,43 @@
+<div class="dark:bg-white bg-gray-900 rounded overflow-hidden shadow-lg flex flex-col">
+    <a href="#"></a>
+    <div class="relative"><a>
+            <img class="w-full h-48 object-cover"
+            [src]="bootcampCardData.bootcampImage + '?auto=compress&cs=tinysrgb&dpr=1&w=500'"
+                alt="Sunset in the mountains">
+            <div
+                class="hover:bg-transparent transition duration-300 absolute bottom-0 top-0 right-0 left-0 bg-gray-900 opacity-25">
+            </div>
+            <div 
+            [ngClass]="{
+              'bg-indigo-600 text-white': bootcampCardData.bootcampState,
+              'bg-red-600 text-white': !bootcampCardData.bootcampState
+            }"
+            class="text-xs absolute top-0 right-0 px-4 py-2 mt-3 mr-3 hover:bg-white hover:text-indigo-600 transition duration-500 ease-in-out">
+            Başvuru Durumu: {{ bootcampCardData.bootcampState ? 'Aktif' : 'Pasif' }}
+          </div>
+        </a>
+    </div>
+    <div class="text-white dark:text-gray-900 px-6 py-4 mb-auto">
+        <a href="#"
+            class="font-medium text-lg inline-block hover:text-indigo-600 transition duration-500 ease-in-out inline-block mb-2">{{bootcampCardData.name}}</a>
+        <p class="text-gray-500 text-sm">
+            C# İnceliklerini Öğrenecek ve istediğiniz projeyi geliştirebileceksiniz.
+        </p>
+    </div>
+    <div class="px-6 py-3 flex flex-row items-center justify-between bg-gray-100">
+        <span href="#"
+            class="py-1 text-xs font-regular text-gray-900 mr-1 flex flex-row items-center">
+            <a [routerLink]="['/inst-profile', bootcampCardData.instructorId]">Egitmen: {{bootcampCardData.instructorFirstName}} {{bootcampCardData.instructorLastName}}</a>
+        </span>
+
+        <span href="#"
+            class="py-1 text-xs font-regular text-gray-900 mr-1 flex flex-row items-center">
+            <svg class="h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z">
+                </path>
+            </svg>
+            <span class="ml-1">12 Comments</span>
+        </span>
+    </div>
+</div>
