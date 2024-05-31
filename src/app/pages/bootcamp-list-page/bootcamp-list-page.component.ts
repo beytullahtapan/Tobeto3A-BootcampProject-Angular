@@ -6,6 +6,10 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { ListBootcampRequest } from '../../features/models/requests/bootcamp/get-bootcamp-request';
+import { BootcampListDto } from '../../features/models/responses/bootcamp/bootcamp-list-item-dto';
+import { PageRequest } from '../../core/models/page-request';
+import { InstructorService } from '../../features/services/concretes/instructor.service';
+import { InstructorListDto } from '../../features/models/responses/instructor/instructor-list-dto';
 
 @Component({
   selector: 'app-bootcamp-list-page',
@@ -15,18 +19,40 @@ import { ListBootcampRequest } from '../../features/models/requests/bootcamp/get
   imports: [FormsModule, CommonModule, RouterModule]
 })
 export class BootcampListPageComponent implements OnInit {
-  bootcamps: BootcampItem[] | null = null; 
+  bootcamps: BootcampItem[] | any = null; 
   error: any;
+  currentPageNumber!: number; 
+  instructors!:InstructorListDto;
+  selectedInstructorId: string = '';
+  selectedBootcampId: string = '';
+  filteredBootcamps: any[] = [];
+  bootcampList: BootcampListDto = {
+    index: 0,
+    size: 0,
+    count: 0,
+    hasNext: false,
+    hasPrevious: false,
+    pages: 0,
+    items: []
+  }; 
 
   constructor(
     private bootcampService: BootcampService,
-    private userService: UserService
+    private userService: UserService,
+    private instructorService:InstructorService
   ) { }
 
   readonly PAGE_SIZE = 10;
 
   ngOnInit(): void {
     this.loadBootcamps();
+    this.loadInstructors();
+  }
+  
+  loadInstructors() {
+    this.instructorService.GetListAll().subscribe(response => {
+      this.instructors = response;
+    });
   }
 
   loadBootcamps(): void {
@@ -55,4 +81,99 @@ export class BootcampListPageComponent implements OnInit {
       }
     );
   }
+  
+  onInstructorChange(event: Event) {
+    const selectElement = event.target as HTMLSelectElement;
+    this.selectedInstructorId = selectElement.value;
+    this.loadBootcamps();
+  }
+
+  filterBootcamps() {
+    const pageRequest: PageRequest = { page: 0, pageSize: 10 };
+
+    if (this.selectedInstructorId && this.selectedBootcampId) {
+      // Eğitmen ve bootcamp seçimine göre filtrele
+      this.bootcampService.getListByBootcampSearch(pageRequest, this.selectedInstructorId,this.selectedBootcampId).subscribe(response => {
+        this.filteredBootcamps = response.items;
+      });
+    } else if (this.selectedInstructorId) {
+      // Sadece eğitmene göre filtrele
+      this.bootcampService.getBootcampListByInstructorId(pageRequest, this.selectedInstructorId).subscribe(response => {
+        this.filteredBootcamps = response.items;
+      });
+    } else if (this.selectedBootcampId) {
+      // Sadece bootcamp'e göre filtrele
+      this.bootcampService.getBootcampListByBootcampId(pageRequest,this.selectedBootcampId).subscribe(response => {
+        this.filteredBootcamps = response.items;
+      });
+    } else {
+      // Tüm bootcamp'leri göster
+      this.filteredBootcamps = this.bootcamps;
+    }
+  }
+
+  applyFilters() {
+    const pageRequest: PageRequest = { page: 0, pageSize: 10 };
+  
+    if (this.selectedInstructorId && this.selectedBootcampId) {
+      // Eğitmen ve bootcamp seçimine göre filtrele
+      this.bootcampService.getListByBootcampSearch(pageRequest, this.selectedInstructorId, this.selectedBootcampId).subscribe(response => {
+        this.filteredBootcamps = response.items;
+      });
+    } else if (this.selectedInstructorId) {
+      // Sadece eğitmene göre filtrele
+      this.bootcampService.getBootcampListByInstructorId(pageRequest, this.selectedInstructorId).subscribe(response => {
+        this.filteredBootcamps = response.items;
+      });
+    } else if (this.selectedBootcampId) {
+      // Sadece bootcamp'e göre filtrele
+      this.bootcampService.getBootcampListByBootcampId(pageRequest, this.selectedBootcampId).subscribe(response => {
+        this.filteredBootcamps = response.items;
+      });
+    } else {
+      // Tüm bootcamp'leri göster
+      this.filteredBootcamps = this.bootcamps;
+    }
+  }
+  
+  onBootcampChange(event: Event) {
+    const selectElement = event.target as HTMLSelectElement;
+    this.selectedBootcampId = selectElement.value;
+    this.loadBootcamps();
+  }
+
+
+  getList(pageRequest: PageRequest) {
+
+    this.bootcampService.getList(pageRequest).subscribe((response) => {
+      this.bootcampList = response;
+
+      this.updateCurrentPageNumber();
+    });
+  }
+  
+  getInstructors(){
+    this.instructorService.GetListAll().subscribe((response)=>{
+      this.instructors=response;
+    })
+  }
+  
+
+  onViewMoreClicked(): void {
+    const nextPageIndex = this.bootcampList.index + 1;
+    const pageSize=this.bootcampList.size;
+    this.getList({page:nextPageIndex,pageSize})
+    this.updateCurrentPageNumber();     
+  }
+
+  onPreviousPageClicked(): void {
+    const previousPageIndex = this.bootcampList.index - 1;
+    const pageSize = this.bootcampList.size;
+    this.getList({page:previousPageIndex,pageSize});
+    this.updateCurrentPageNumber();               
+  }
+
+  updateCurrentPageNumber(): void {
+    this.currentPageNumber = this.bootcampList.index + 1;
+  }   
 }
