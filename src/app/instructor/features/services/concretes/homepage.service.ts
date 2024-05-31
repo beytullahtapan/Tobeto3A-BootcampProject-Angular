@@ -26,6 +26,4 @@ export class HomepageService extends InstructorHomePageBaseService {
     );
   }
 
-
-
 }

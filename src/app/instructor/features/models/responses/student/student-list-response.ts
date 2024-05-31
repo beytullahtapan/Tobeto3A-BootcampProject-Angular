@@ -1,7 +1,6 @@
-export interface UserForInfoResponse{
+export interface StudentListItem {
     id:string;
     email:string,
-    password:string,
     userName:string,
     firstName:string,
     lastName:string,

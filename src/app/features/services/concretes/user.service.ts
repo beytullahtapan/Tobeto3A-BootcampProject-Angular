@@ -6,6 +6,8 @@ import { UserBaseService } from '../abstracts/user-base.service';
 import { UserForInfoRequest } from '../../models/requests/users/user-info-request';
 import { UserForInfoResponse } from '../../models/responses/users/user-info-response';
 import { Observable, catchError, map } from 'rxjs';
+import { StudentListItemDto } from '../../../instructor/features/models/responses/student/student-list-item-dto';
+import { StudentListItem } from '../../../instructor/features/models/responses/student/student-list-response';
 
 
 @Injectable({
@@ -29,5 +31,16 @@ export class UserService extends UserBaseService {
             })
         );
     }
+
+    studentinfo(userForInfoRequest: UserForInfoRequest): Observable<StudentListItem> {
+      return this.httpClient.get<StudentListItem>(`${this.apiUrl}/${userForInfoRequest.ıd}`).pipe(
+          map(response => {
+              return response;
+          }),
+          catchError(error => {
+              throw error;
+          })
+      );
+  }
       
   }
