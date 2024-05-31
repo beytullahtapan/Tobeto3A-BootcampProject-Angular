@@ -6,22 +6,23 @@
           <label class="block text-gray-700 text-sm font-bold mb-2" for="instructor">
             Eğitmen
           </label>
-          <select id="countries" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-            <option selected>Eğitmen Seçimi</option>
-            <option value="Beytullah Tapan">Beytullah Tapan</option>
-            <option value="Kerem Özkan">Kerem Özkan</option>
+          <select id="countries" (change)="onInstructorChange($event)" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+            <option value="">Eğitmen Seçimi</option>
+            <option *ngFor="let instructor of instructors?.items" [value]="instructor.id">{{ instructor.firstName
+            }} {{ instructor.lastName }}</option>
           </select>
         </div>
         <div class="mt-4">
           <label class="block text-gray-700 text-sm font-bold mb-2" for="course">
             Ders
           </label>
-          <select id="countries" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-            <option selected>Ders Seçimi</option>
-            <option value="C#">C#</option>
-            <option value="C">C</option>
-            <option value="GO">GO</option>
+          <select id="countries" (change)="onBootcampChange($event)" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+            <option value="">Ders Seçimi</option>
+            <option *ngFor="let bootcamp of bootcamps" [value]="bootcamp.id">{{ bootcamp.name }}</option>
           </select>
+        </div>
+        <div class="mt-4">
+          <button (click)="applyFilters()" class="bg-blue-500 text-white px-4 py-2 rounded">Filtrele</button>
         </div>
       </div>
     </div>
@@ -64,4 +65,12 @@
       </div>
     </div>
   </div>
+  <div class="flex justify-between mt-4">
+    <button (click)="onPreviousPageClicked()" [disabled]="!bootcampList.hasPrevious" class="bg-blue-500 text-white px-4 py-2 rounded disabled:bg-gray-300">
+        Önceki
+    </button>
+    <button (click)="onViewMoreClicked()" [disabled]="!bootcampList.hasNext" class="bg-blue-500 text-white px-4 py-2 rounded disabled:bg-gray-300">
+        Sonraki
+    </button>
+</div> 
   

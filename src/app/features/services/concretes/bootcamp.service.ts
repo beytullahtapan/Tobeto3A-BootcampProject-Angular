@@ -7,11 +7,44 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../../environments/environment.development';
 import { ListBootcampResponse } from '../../models/responses/bootcamp/get-bootcamps-response';
 import { ListBootcampRequest } from '../../models/requests/bootcamp/get-bootcamp-request';
+import { GetbyidBootcampResponse } from '../../models/responses/bootcamp/getbyid-bootcamp-response';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BootcampService extends BootcampBaseService {
+  
+  getBootcampListByBootcampId(pageRequest: PageRequest, bootcampId: string): Observable<BootcampListDto> {
+    const url = `${this.apiUrl}/bootcamps/bootcamp/${bootcampId}?page=${pageRequest.page}&size=${pageRequest.pageSize}`;
+    return this.httpClient.get<BootcampListDto>(url);
+  }
+  
+  override getListByBootcampSearch(pageRequest: PageRequest, search: string, instructorId: string): Observable<BootcampListDto> {
+    const newRequest: {[key: string]: string | number} = {
+      pageIndex: pageRequest.page,
+      pageSize: pageRequest.pageSize,
+      search: search,
+      instructorId: instructorId
+    };
+
+    return this.httpClient.get<BootcampListDto>(`${this.apiUrl}/getbootcampListByBootcampNameSearch`, {
+      params: newRequest
+    }).pipe(
+      map((response)=>{
+        const newResponse:BootcampListDto={
+          index:pageRequest.page,
+          size:pageRequest.pageSize,
+          count:response.count,
+          hasNext:response.hasNext,
+          hasPrevious:response.hasPrevious,
+          items:response.items,
+          pages:response.pages
+        };
+        
+        return newResponse;
+      })
+    );
+  }
   
   private readonly apiUrl:string = `${environment.API_URL}/Bootcamps`
   constructor(private httpClient:HttpClient) {super() }
@@ -79,6 +112,6 @@ export class BootcampService extends BootcampBaseService {
           throw responseError;
         })
       );
-    }
+    }   
   
 }

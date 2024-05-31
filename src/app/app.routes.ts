@@ -13,7 +13,7 @@ import { PrivacyPolicyComponent } from './pages/privacy-policy/privacy-policy.co
 import { ProfileComponent } from './pages/profile/profile.component';
 import { AccountSettingsComponent } from './pages/account-settings/account-settings.component';
 import { ProfileSettingsComponent } from './pages/profile-settings/profile-settings/profile-settings.component';
-import { MyBootcampsComponent } from './pages/my-bootcamps/my-bootcamps.component';
+
 
 
 export const routes: Routes = [
@@ -28,7 +28,7 @@ export const routes: Routes = [
    {path:'profile',component:ProfileComponent},
    {path:'account-setting',component:AccountSettingsComponent},
    {path:'profile-settings',component:ProfileSettingsComponent},
-   {path:'my-bootcamps',component:MyBootcampsComponent},
+   
    //Admin
    { path: 'admin', children: adminRoutes },
    //Instructor
