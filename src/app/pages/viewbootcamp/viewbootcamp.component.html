@@ -1,1 +1,41 @@
-<p>viewbootcamp works!</p>
+<div class="grid grid-cols-1 sm:grid-cols-4 gap-10 mt-5">
+  <div class="col-span-1">
+    <div class="p-4 bg-white shadow-lg rounded">
+      <h2 class="text-lg font-medium mb-4">Dersler</h2>
+      <div *ngIf="lessons">
+        <ul class="space-y-3 text-lg border border-2 border-indigo-400 rounded-lg p-5">
+          <li class="flex space-x-3" *ngFor="let lesson of lessons">
+            <svg class="flex-shrink-0 h-6 w-6 text-blue-600" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M11.5219 4.0949C11.7604 3.81436 12.181 3.78025 12.4617 4.01871C12.7422 4.25717 12.7763 4.6779 12.5378 4.95844L6.87116 11.6251C6.62896 11.91 6.1998 11.94 5.9203 11.6916L2.9203 9.02494C2.64511 8.78033 2.62032 8.35894 2.86493 8.08375C3.10955 7.80856 3.53092 7.78378 3.80611 8.02839L6.29667 10.2423L11.5219 4.0949Z" fill="currentColor"/>
+            </svg>
+            <span class="text-gray-800 dark:text-gray-400">
+              <a (click)="getLesson(lesson.id)" style="cursor: pointer;" class="text-blue-600 hover:underline">{{ lesson.title }}</a>
+            </span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-span-3 flex flex-col space-y-10">
+    <div *ngIf="videoUrl">
+      <h2 class="text-lg font-medium mb-4">Video</h2>
+      <div class="aspect-w-16 aspect-h-9">
+        <iframe
+          [src]="videoUrl"
+          frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen
+          class="w-full shadow"
+          height="650"
+        ></iframe>
+      </div>
+    </div>
+    <div>
+      <h2 class="text-lg font-medium mb-4">İçerik</h2>
+      <div *ngIf="LessoncontentForm.get('text')?.value">
+        <div [innerHTML]="LessoncontentForm.get('text')?.value" class="prose"></div>
+      </div>
+    </div>
+  </div>
+</div>
