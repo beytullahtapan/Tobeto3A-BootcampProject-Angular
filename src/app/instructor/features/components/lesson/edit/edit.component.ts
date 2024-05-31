@@ -53,34 +53,14 @@ export class EditInstructorLessonComponent implements OnInit {
 
   async loadData(): Promise<void> {
     try {
-      await Promise.all([this.getBootcamp(), this.getLesson()]);
+      await Promise.all([this.getLesson()]);
       this.patchForm();
     } catch (error) {
       console.error('Error loading data:', error);
     }
   }
 
-  async getBootcamp(): Promise<void> {
-    const instructorId = this.authService.getCurrentUserId();
-    const request: ListBootcampRequest = { InstructorId: instructorId, pageIndex: 0, pageSize: 100 };
-    return new Promise((resolve, reject) => {
-      this.bootcampService.list(request).pipe(
-        catchError(error => {
-          this.error = error;
-          console.error('Error fetching bootcamps', error);
-          return of(null);
-        })
-      ).subscribe(response => {
-        if (response && response.items) {
-          this.bootcamps = response.items;
-          resolve();
-        } else {
-          console.error('Response or items array is null.');
-          reject('Response or items array is null.');
-        }
-      });
-    });
-  }
+  
 
   async getLesson(): Promise<void> {
     const lessonId = this.activatedRoute.snapshot.params['id'];

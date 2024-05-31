@@ -11,12 +11,14 @@ import { DeleteBootcampImageRequest } from '../../models/requests/bootcamp/delet
 import { DeleteBootcampImageResponse } from '../../models/responses/bootcamp/deletebootcampımageresponse';
 import { ListLessonRequest } from '../../models/requests/lesson/listlessonrequest';
 import { ListLessonResponse } from '../../models/responses/lesson/listlessonresponse';
+import { PageRequest } from '../../../../core/models/page-request';
+import { BootcampListDto } from '../../../../features/models/responses/bootcamp/bootcamp-list-item-dto';
 
 
 @Injectable()
 export abstract class InstructorBootcampBaseService {
     abstract add(addBootcampRequest: AddBootcampRequest): Observable<AddBootcampResponse>;
-    abstract list(listBootcampRequest: ListBootcampRequest): Observable<ListBootcampResponse>;
+    abstract list(pageRequest: PageRequest, instructorId: String): Observable<BootcampListDto>;
     abstract getBootcampById(bootcampId: number): Observable<GetbyIdBootcampResponse>;
     abstract updateBootcamp(updateBootcampRequest: UpdateBootcampRequest): Observable<UpdateBootcampResponse>;
     abstract deleteimage(deleteBootcampImageRequest: DeleteBootcampImageRequest): Observable<DeleteBootcampImageResponse>;

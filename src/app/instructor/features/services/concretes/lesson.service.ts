@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, catchError, map } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from '../../../../../environments/environment';
 import { InstructorLessonBaseService } from '../abstracts/lesson-base.service';
 import { AddLessonRequest } from '../../models/requests/lesson/addlessonrequest';
@@ -12,6 +12,8 @@ import { GetByidLessonResponse } from '../../models/responses/lesson/getbyidresp
 import { UpdateLessonRequest } from '../../models/requests/lesson/updatelessonrequest';
 import { UpdateLessonResponse } from '../../models/responses/lesson/updatelessonresponse';
 import { AddLessonContentRequest } from '../../models/requests/lesson/addlessoncontentrequest';
+import { LessonListDto } from '../../../../features/models/responses/viewbootcamp/lesson-list-item-dto';
+import { PageRequest } from '../../../../core/models/page-request';
 
 @Injectable({
   providedIn: 'root'
@@ -45,16 +47,28 @@ export class InstructorLessonService extends InstructorLessonBaseService {
   }
 
 
-  override getLessonlist(listLessonRequest: ListLessonRequest): Observable<ListLessonResponse> {
-    const url = `${this.apiUrl}/bootcamp/${listLessonRequest.BootcampId}`;
-    const params = { PageIndex: listLessonRequest.pageIndex.toString(), PageSize: listLessonRequest.pageSize.toString() };
+  getLessonlist(pageRequest: PageRequest, bootcampId: number): Observable<LessonListDto> {
+    const newRequest: {[key: string]: string | number} = {
+      pageIndex: pageRequest.page,
+      pageSize: pageRequest.pageSize
+    };
 
-    return this.httpClient.get<ListLessonResponse>(url, { params }).pipe(
-      map(response => response),
-      catchError(responseError => {
-        throw responseError;
+    return this.httpClient.get<LessonListDto>(`${this.apiUrl}/bootcamp/${bootcampId}`, {
+      params: newRequest
+    }).pipe(
+      map((response)=>{
+        const newResponse:LessonListDto={
+          index:pageRequest.page,
+          size:pageRequest.pageSize,
+          count:response.count,
+          hasNext:response.hasNext,
+          hasPrevious:response.hasPrevious,
+          items:response.items,
+          pages:response.pages
+        };
+        return newResponse;
       })
-    );
+    )
   }
 
   override getbyid(getByidLessonRequest: GetByidLessonRequest): Observable<GetByidLessonResponse> {

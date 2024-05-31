@@ -1,19 +1,19 @@
 export interface UpdateSettingsRequest {
     Id: string; 
-    Title: string;
-    Description:string;
-    Keywords:string;
-    Email :string;
-    Phone: Date;
-    GoogleSiteKey:string;
-    GoogleSecretKey:string;
-    GoogleAnalytics:string;
-    LogoUrl:string;
+    title: string;
+    description:string;
+    keywords:string;
+    email :string;
+    phone: Date;
+    googleSiteKey:string;
+    googleSecretKey:string;
+    googleAnalytics:string;
+    logoUrl:string;
     LogoFile:File;
-    FaviconUrl:string;
+    faviconUrl:string;
     FaviconFile: File;
-    MaintenanceMode:boolean;
-    TermsOfUse:string;
-    PrivacyPolicy:string;
+    maintenanceMode:boolean;
+    termsOfUse:string;
+    privacyPolicy:string;
     updatedDate:Date;
 }

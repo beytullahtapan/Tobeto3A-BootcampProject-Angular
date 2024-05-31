@@ -14,6 +14,7 @@ import { PrivacyPolicyComponent } from './pages/privacy-policy/privacy-policy.co
 import { ProfileComponent } from './pages/profile/profile.component';
 import { AccountSettingsComponent } from './pages/account-settings/account-settings.component';
 import { ProfileSettingsComponent } from './pages/profile-settings/profile-settings/profile-settings.component';
+import { ViewbootcampComponent } from './pages/viewbootcamp/viewbootcamp.component';
 
 
 
@@ -27,12 +28,11 @@ export const routes: Routes = [
    { path:'bootcamps',component:BootcampListPageComponent},
    { path:'inst-profile/:instructorId',component: InstructorPageComponent},
    { path:'announcements', component:AnnouncementsComponent},
-
    {path:'privacy-policy',component:PrivacyPolicyComponent},
    {path:'profile',component:ProfileComponent},
    {path:'account-setting',component:AccountSettingsComponent},
    {path:'profile-settings',component:ProfileSettingsComponent},
-   
+   {path:'viewbootcamp/:id',component:ViewbootcampComponent},
    //Admin
    { path: 'admin', children: adminRoutes },
    //Instructor

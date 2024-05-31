@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { BootcampService } from '../../features/services/concretes/bootcamp.service';
 import { UserService } from '../../features/services/concretes/user.service';
-import { ListBootcampResponse, BootcampItem } from '../../features/models/responses/bootcamp/get-bootcamps-response';
+import { BootcampItem } from '../../features/models/responses/bootcamp/get-bootcamps-response';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { ListBootcampRequest } from '../../features/models/requests/bootcamp/get-bootcamp-request';
 import { BootcampListDto } from '../../features/models/responses/bootcamp/bootcamp-list-item-dto';
 import { PageRequest } from '../../core/models/page-request';
-import { InstructorService } from '../../features/services/concretes/instructor.service';
-import { InstructorListDto } from '../../features/models/responses/instructor/instructor-list-dto';
+import { BootcampApplicationRequest } from '../../features/models/requests/bootcampapplication/bootcamp-application-request';
+import { AuthService } from '../../features/services/concretes/auth.service';
+import { BootcampApplicationService } from '../../features/services/concretes/bootcampApplication.service';
 
 @Component({
   selector: 'app-bootcamp-list-page',
@@ -22,10 +22,6 @@ export class BootcampListPageComponent implements OnInit {
   bootcamps: BootcampItem[] | any = null; 
   error: any;
   currentPageNumber!: number; 
-  instructors!:InstructorListDto;
-  selectedInstructorId: string = '';
-  selectedBootcampId: string = '';
-  filteredBootcamps: any[] = [];
   bootcampList: BootcampListDto = {
     index: 0,
     size: 0,
@@ -39,38 +35,49 @@ export class BootcampListPageComponent implements OnInit {
   constructor(
     private bootcampService: BootcampService,
     private userService: UserService,
-    private instructorService:InstructorService
+    private authService: AuthService,
+    private bootcampApplicationService: BootcampApplicationService
   ) { }
 
-  readonly PAGE_SIZE = 10;
+  readonly PAGE_SIZE = 5;
 
   ngOnInit(): void {
-    this.loadBootcamps();
-    this.loadInstructors();
+    this.loadBootcamps({ page: 0, pageSize: this.PAGE_SIZE });
   }
   
-  loadInstructors() {
-    this.instructorService.GetListAll().subscribe(response => {
-      this.instructors = response;
-    });
-  }
 
-  loadBootcamps(): void {
-    const request: ListBootcampRequest = {  pageIndex: 0, pageSize: 5 };
-    this.bootcampService.GetBootcamp(request).subscribe(
-      (response: ListBootcampResponse) => {
+
+  loadBootcamps(pageRequest: PageRequest): void {
+    this.bootcampService.getList(pageRequest).subscribe(
+      (response: BootcampListDto) => {
         if (response && response.items) {
-          response.items.forEach(bootcamp => {
+          const bootcampItems = response.items.map(bootcamp => {
             this.userService.userinfo({ ıd: bootcamp.instructorId }).subscribe(
               (userInfoResponse) => {
-                bootcamp.InsturctorName = `${userInfoResponse.firstName} ${userInfoResponse.lastName}`;
+                bootcamp.instructorName = `${userInfoResponse.firstName} ${userInfoResponse.lastName}`;
               },
               (error) => {
                 console.error('Error fetching user info', error);
               }
             );
+            if(this.authService.loggedIn())
+            {
+              const applicantId = this.authService.getCurrentUserId();
+              this.bootcampApplicationService.CheckBootcamp(bootcamp.id).subscribe(
+                (checkResponse) => {
+                  bootcamp.isRegistered = checkResponse.applicantId === applicantId;
+                },
+                (error) => {
+                  console.error('Error checking bootcamp registration', error);
+                  bootcamp.isRegistered = false;
+                }
+              );
+            }
+            return bootcamp;
           });
-          this.bootcamps = response.items;
+
+          this.bootcamps = bootcampItems;
+          this.bootcampList = response;
         } else {
           console.error('Response or items array is null.');
         }
@@ -82,98 +89,35 @@ export class BootcampListPageComponent implements OnInit {
     );
   }
   
-  onInstructorChange(event: Event) {
-    const selectElement = event.target as HTMLSelectElement;
-    this.selectedInstructorId = selectElement.value;
-    this.loadBootcamps();
-  }
-
-  filterBootcamps() {
-    const pageRequest: PageRequest = { page: 0, pageSize: 10 };
-
-    if (this.selectedInstructorId && this.selectedBootcampId) {
-      // Eğitmen ve bootcamp seçimine göre filtrele
-      this.bootcampService.getListByBootcampSearch(pageRequest, this.selectedInstructorId,this.selectedBootcampId).subscribe(response => {
-        this.filteredBootcamps = response.items;
-      });
-    } else if (this.selectedInstructorId) {
-      // Sadece eğitmene göre filtrele
-      this.bootcampService.getBootcampListByInstructorId(pageRequest, this.selectedInstructorId).subscribe(response => {
-        this.filteredBootcamps = response.items;
-      });
-    } else if (this.selectedBootcampId) {
-      // Sadece bootcamp'e göre filtrele
-      this.bootcampService.getBootcampListByBootcampId(pageRequest,this.selectedBootcampId).subscribe(response => {
-        this.filteredBootcamps = response.items;
-      });
-    } else {
-      // Tüm bootcamp'leri göster
-      this.filteredBootcamps = this.bootcamps;
-    }
-  }
-
-  applyFilters() {
-    const pageRequest: PageRequest = { page: 0, pageSize: 10 };
   
-    if (this.selectedInstructorId && this.selectedBootcampId) {
-      // Eğitmen ve bootcamp seçimine göre filtrele
-      this.bootcampService.getListByBootcampSearch(pageRequest, this.selectedInstructorId, this.selectedBootcampId).subscribe(response => {
-        this.filteredBootcamps = response.items;
-      });
-    } else if (this.selectedInstructorId) {
-      // Sadece eğitmene göre filtrele
-      this.bootcampService.getBootcampListByInstructorId(pageRequest, this.selectedInstructorId).subscribe(response => {
-        this.filteredBootcamps = response.items;
-      });
-    } else if (this.selectedBootcampId) {
-      // Sadece bootcamp'e göre filtrele
-      this.bootcampService.getBootcampListByBootcampId(pageRequest, this.selectedBootcampId).subscribe(response => {
-        this.filteredBootcamps = response.items;
-      });
-    } else {
-      // Tüm bootcamp'leri göster
-      this.filteredBootcamps = this.bootcamps;
-    }
-  }
-  
-  onBootcampChange(event: Event) {
-    const selectElement = event.target as HTMLSelectElement;
-    this.selectedBootcampId = selectElement.value;
-    this.loadBootcamps();
-  }
-
-
-  getList(pageRequest: PageRequest) {
-
-    this.bootcampService.getList(pageRequest).subscribe((response) => {
-      this.bootcampList = response;
-
-      this.updateCurrentPageNumber();
-    });
-  }
-  
-  getInstructors(){
-    this.instructorService.GetListAll().subscribe((response)=>{
-      this.instructors=response;
-    })
-  }
-  
-
   onViewMoreClicked(): void {
     const nextPageIndex = this.bootcampList.index + 1;
-    const pageSize=this.bootcampList.size;
-    this.getList({page:nextPageIndex,pageSize})
+    const pageSize = this.bootcampList.size;
+    this.loadBootcamps({ page: nextPageIndex, pageSize });
     this.updateCurrentPageNumber();     
   }
 
   onPreviousPageClicked(): void {
     const previousPageIndex = this.bootcampList.index - 1;
     const pageSize = this.bootcampList.size;
-    this.getList({page:previousPageIndex,pageSize});
+    this.loadBootcamps({ page: previousPageIndex, pageSize });
     this.updateCurrentPageNumber();               
   }
 
   updateCurrentPageNumber(): void {
     this.currentPageNumber = this.bootcampList.index + 1;
   }   
+
+  applyToBootcamp(bootcampId: number): void {
+    const applicantId = this.authService.getCurrentUserId();
+    const applicationRequest: BootcampApplicationRequest = { bootcampId, applicantId };
+    this.bootcampApplicationService.apply(applicationRequest).subscribe(
+      (response) => {
+        console.log('Başvuru başarılı', response);
+      },
+      (error) => {
+        console.error('Başvuru hatası', error);
+      }
+    );
+  }
 }

@@ -98,15 +98,18 @@ export class BootcampService extends BootcampBaseService {
 
 
 
-    override GetBootcamp(listBootcampRequest:ListBootcampRequest): Observable<ListBootcampResponse> {
+    GetBootcamp(listBootcampRequest: ListBootcampRequest): Observable<ListBootcampResponse> {
       const url = `${this.apiUrl}`;
-     const params = { PageIndex: listBootcampRequest.pageIndex.toString(), PageSize: listBootcampRequest.pageSize.toString() };
+      const params = {
+        PageIndex: listBootcampRequest.pageIndex.toString(),
+        PageSize: listBootcampRequest.pageSize.toString()
+      };
       return this.httpClient.get<ListBootcampResponse>(url, { params }).pipe(
         map(response => response),
         catchError(responseError => {
           throw responseError;
         })
       );
-    }   
+    } 
   
 }

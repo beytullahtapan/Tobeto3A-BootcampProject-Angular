@@ -11,6 +11,8 @@ import { UpdateSettingsRequest } from '../../models/requests/settings/update-set
 import { updateCloudrinaryRequest } from '../../models/requests/cloudinary/updatecloudrinaryrequest';
 import { CloudiranyService } from '../../services/concretes/cloudinary.service';
 import { updateCloudrinaryResponse } from '../../models/responses/cloudinary/updateCloudrinaryresponse';
+import { UpdateSettingsImageRequest } from '../../models/requests/settings/update-image-request';
+import { UpdateSettingsImageResponse } from '../../models/responses/settings/update-image-response';
 
 @Component({
   selector: 'app-settings',
@@ -29,8 +31,8 @@ export class SettingsComponent implements OnInit {
   constructor(private router:Router, private activatedRoute: ActivatedRoute, private settingsService:SettingsService,private formBuilder:FormBuilder,private cloudiranyService:CloudiranyService) {}
 
   ngOnInit(): void {
-    this.getSettings();
     initFlowbite();
+    this.getSettings();
     this.initForm();
   }
   initForm(): void {
@@ -87,69 +89,73 @@ export class SettingsComponent implements OnInit {
   SaveSettings(): void {
     if (this.SaveSettingsForm.valid) {
       let settingsModel: UpdateSettingsRequest = Object.assign({}, this.SaveSettingsForm.value);
-     
       if (settingsModel.LogoFile) {
-        const logoformdata = new FormData();
-        logoformdata.append("formFile", settingsModel.LogoFile);
-        this.cloudiranyService.updateCloudrinary(logoformdata).subscribe((response: updateCloudrinaryResponse) => {
-          settingsModel.LogoUrl = response.url; 
-  
-          if (settingsModel.FaviconFile) {
-            const favicondata = new FormData();
-            favicondata.append("formFile", settingsModel.FaviconFile);
-            this.cloudiranyService.updateCloudrinary(favicondata).subscribe((response: updateCloudrinaryResponse) => {
-              settingsModel.FaviconUrl = response.url;
-  
-             
-              this.settingsService.updateSettings(settingsModel).subscribe(
-                (response) => {
-                  console.log("Settings updated successfully: ", response);
-                },
-                (error) => {
-                  console.error('Error updating settings:', error);
-                }
-              );
-            });
-          } else {
-            this.settingsService.updateSettings(settingsModel).subscribe(
-              (response) => {
-                console.log("Settings updated successfully: ", response);
-              },
-              (error) => {
-                console.error('Error updating settings:', error);
-              }
-            );
-          }
-        });
+        this.updateLogo(settingsModel);
       } else if (settingsModel.FaviconFile) {
-        const favicondata = new FormData();
-        favicondata.append("formFile", settingsModel.FaviconFile);
-        this.cloudiranyService.updateCloudrinary(favicondata).subscribe((response: updateCloudrinaryResponse) => {
-          settingsModel.FaviconUrl = response.url;
-  
-          this.settingsService.updateSettings(settingsModel).subscribe(
-            (response) => {
-              console.log("Settings updated successfully: ", response);
-            },
-            (error) => {
-              console.error('Error updating settings:', error);
-            }
-          );
-        });
+        this.updateFavicon(settingsModel);
       } else {
         // Ne logo ne de favicon seçilmediyse sadece ayarları güncelle
-        this.settingsService.updateSettings(settingsModel).subscribe(
-          (response) => {
-            console.log("Settings updated successfully: ", response);
-          },
-          (error) => {
-            console.error('Error updating settings:', error);
-          }
-        );
+        this.updateSettings(settingsModel);
       }
     } else {
       console.log("Form is invalid.");
     }
   }
+  
+  updateLogo(settingsModel: UpdateSettingsRequest): void {
+    const logoformdata = new FormData();
+    logoformdata.append("formFile", settingsModel.LogoFile);
+  
+    if (settingsModel.logoUrl) {
+      let deletelogoModel: UpdateSettingsImageRequest = {
+        Url: settingsModel.logoUrl 
+      };
+      this.settingsService.deleteimage(deletelogoModel).subscribe(() => {
+        this.cloudiranyService.updateCloudrinary(logoformdata).subscribe((response: updateCloudrinaryResponse) => {
+          settingsModel.logoUrl = response.url; 
+          this.updateFavicon(settingsModel);
+        });
+      });
+    } else {
+      this.cloudiranyService.updateCloudrinary(logoformdata).subscribe((response: updateCloudrinaryResponse) => {
+        settingsModel.logoUrl = response.url; 
+        this.updateFavicon(settingsModel);
+      });
+    }
+  }
+  
+  updateFavicon(settingsModel: UpdateSettingsRequest): void {
+    const favicondata = new FormData();
+    favicondata.append("formFile", settingsModel.FaviconFile);
+  
+    if (settingsModel.faviconUrl) {
+      let deletefaviconModel: UpdateSettingsImageRequest = {
+        Url: settingsModel.faviconUrl 
+      };
+      this.settingsService.deleteimage(deletefaviconModel).subscribe(() => {
+        this.cloudiranyService.updateCloudrinary(favicondata).subscribe((response: updateCloudrinaryResponse) => {
+          settingsModel.faviconUrl = response.url;
+          this.updateSettings(settingsModel);
+        });
+      });
+    } else {
+      this.cloudiranyService.updateCloudrinary(favicondata).subscribe((response: updateCloudrinaryResponse) => {
+        settingsModel.faviconUrl = response.url;
+        this.updateSettings(settingsModel);
+      });
+    }
+  }
+  
+  updateSettings(settingsModel: UpdateSettingsRequest): void {
+    this.settingsService.updateSettings(settingsModel).subscribe(
+      (response) => {
+        console.log("Settings updated successfully: ", response);
+      },
+      (error) => {
+        console.error('Error updating settings:', error);
+      }
+    );
+  }
+  
  
 }

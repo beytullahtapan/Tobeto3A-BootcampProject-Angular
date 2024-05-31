@@ -45,6 +45,7 @@
             <th scope="col" class="px-6 py-3">Eğitmen</th>
             <th scope="col" class="px-6 py-3">Kurs Durumu</th>
             <th scope="col" class="px-6 py-3">Dersler</th>
+            <th scope="col" class="px-6 py-3">Ders Ekle</th>
             <th scope="col" class="px-6 py-3">İşlemler</th>
           </tr>
         </thead>
@@ -59,6 +60,9 @@
                  <a routerLink="/instructor/lesson/list/{{ item.id }}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline m-1">Dersler</a>
                 </div>
                </td>
+               <td class="px-6 py-4">
+                <a routerLink="/instructor/lesson/add/{{ item.id }}"  class="font-medium text-blue-600 dark:text-blue-500 hover:underline m-1">Ders Ekle</a>
+              </td>
               <td class="px-6 py-4">
                <div>
                 <a routerLink="/instructor/bootcamp/edit/{{ item.id }}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline m-1">DÜZENLE</a>
@@ -69,6 +73,18 @@
           </ng-container>
         </tbody>
       </table>
+      <div class="flex justify-between mt-4">
+        <div>
+            <button (click)="onPreviousPageClicked()" [disabled]="!bootcampList.hasPrevious" class="bg-blue-500 text-white px-4 py-2 rounded disabled:bg-gray-300">
+                Önceki
+            </button>
+        </div>
+        <div>
+            <button (click)="onViewMoreClicked()" [disabled]="!bootcampList.hasNext" class="bg-blue-500 text-white px-4 py-2 rounded disabled:bg-gray-300">
+                Sonraki
+            </button>
+        </div>
+    </div>
     </div>
   </div>
 </section>
