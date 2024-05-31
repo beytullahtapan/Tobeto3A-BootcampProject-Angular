@@ -116,8 +116,6 @@ export class ViewbootcampComponent implements OnInit {
                 lesson.bootcampName = bootcamp.name;
                 return lesson;
               });
-
-              // bootcampList özelliklerini güncelle
               this.LessonList.index = response.index;
               this.LessonList.size = response.size;
               this.LessonList.count = response.count;

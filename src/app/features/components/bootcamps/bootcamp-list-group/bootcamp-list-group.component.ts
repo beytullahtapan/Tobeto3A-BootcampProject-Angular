@@ -2,13 +2,14 @@ import { CommonModule } from '@angular/common';
 import { PageRequest } from '../../../../core/models/page-request';
 import { BootcampService } from '../../../services/concretes/bootcamp.service';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, RouterModule } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { BootcampListDto } from '../../../models/responses/bootcamp/bootcamp-list-item-dto';
 import { UserService } from '../../../services/concretes/user.service';
 import { AuthService } from '../../../services/concretes/auth.service';
 import { BootcampApplicationService } from '../../../services/concretes/bootcampApplication.service';
 import { BootcampItem } from '../../../models/responses/bootcamp/get-bootcamps-response';
 import { BootcampApplicationRequest } from '../../../models/requests/bootcampapplication/bootcamp-application-request';
+import { AppToastrService, ToastrMessageType } from '../../../services/concretes/app-toastr.service';
 
 @Component({
   selector: 'app-bootcamp-list-group',
@@ -36,7 +37,10 @@ export class BootcampListGroupComponent implements OnInit {
     private bootcampService: BootcampService,
     private userService: UserService,
     private authService: AuthService,
-    private bootcampApplicationService: BootcampApplicationService
+    private bootcampApplicationService: BootcampApplicationService,
+    private autService: AuthService,
+    private toastrService:AppToastrService,
+    private router:Router
   ) { }
 
   readonly PAGE_SIZE = 3;
@@ -90,17 +94,21 @@ export class BootcampListGroupComponent implements OnInit {
   }
 
   applyToBootcamp(bootcampId: number): void {
-    const applicantId = this.authService.getCurrentUserId();
-    const applicationRequest: BootcampApplicationRequest = { bootcampId, applicantId };
-    this.bootcampApplicationService.apply(applicationRequest).subscribe(
-      (response) => {
-        console.log('Başvuru başarılı', response);
-      },
-      (error) => {
-        console.error('Başvuru hatası', error);
-      }
-    );
+    if(this.authService.loggedIn()){
+      const applicantId = this.authService.getCurrentUserId();
+      const applicationRequest: BootcampApplicationRequest = { bootcampId, applicantId };
+      this.bootcampApplicationService.apply(applicationRequest).subscribe(
+        (response) => {
+          console.log('Başvuru başarılı', response);
+        },
+        (error) => {
+          console.error('Başvuru hatası', error);
+        }
+      );
+    }else{
+       this.toastrService.message("Bootcamp'e Başvurmak  için  giriş yapmalısınız.", "Hata!", ToastrMessageType.Error);
+        this.router.navigate(['/login']);
+    }
   }
-
   
 }

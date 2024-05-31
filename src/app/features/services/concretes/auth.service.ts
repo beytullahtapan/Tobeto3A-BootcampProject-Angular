@@ -102,7 +102,6 @@ export class AuthService extends AuthBaseService {
       return true;
     }
     return false;
-    
   }
 
   override hasRole(role:string):boolean{

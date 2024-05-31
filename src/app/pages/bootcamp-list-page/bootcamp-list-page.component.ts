@@ -4,12 +4,13 @@ import { UserService } from '../../features/services/concretes/user.service';
 import { BootcampItem } from '../../features/models/responses/bootcamp/get-bootcamps-response';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { BootcampListDto } from '../../features/models/responses/bootcamp/bootcamp-list-item-dto';
 import { PageRequest } from '../../core/models/page-request';
 import { BootcampApplicationRequest } from '../../features/models/requests/bootcampapplication/bootcamp-application-request';
 import { AuthService } from '../../features/services/concretes/auth.service';
 import { BootcampApplicationService } from '../../features/services/concretes/bootcampApplication.service';
+import { AppToastrService, ToastrMessageType } from '../../features/services/concretes/app-toastr.service';
 
 @Component({
   selector: 'app-bootcamp-list-page',
@@ -36,7 +37,9 @@ export class BootcampListPageComponent implements OnInit {
     private bootcampService: BootcampService,
     private userService: UserService,
     private authService: AuthService,
-    private bootcampApplicationService: BootcampApplicationService
+    private bootcampApplicationService: BootcampApplicationService,
+    private toastrService:AppToastrService,
+    private router: Router
   ) { }
 
   readonly PAGE_SIZE = 5;
@@ -109,15 +112,20 @@ export class BootcampListPageComponent implements OnInit {
   }   
 
   applyToBootcamp(bootcampId: number): void {
-    const applicantId = this.authService.getCurrentUserId();
-    const applicationRequest: BootcampApplicationRequest = { bootcampId, applicantId };
-    this.bootcampApplicationService.apply(applicationRequest).subscribe(
-      (response) => {
-        console.log('Başvuru başarılı', response);
-      },
-      (error) => {
-        console.error('Başvuru hatası', error);
-      }
-    );
+    if(this.authService.loggedIn()){
+      const applicantId = this.authService.getCurrentUserId();
+      const applicationRequest: BootcampApplicationRequest = { bootcampId, applicantId };
+      this.bootcampApplicationService.apply(applicationRequest).subscribe(
+        (response) => {
+          console.log('Başvuru başarılı', response);
+        },
+        (error) => {
+          console.error('Başvuru hatası', error);
+        }
+      );
+    }else{
+       this.toastrService.message("Bootcamp'e Başvurmak  için  giriş yapmalısınız.", "Hata!", ToastrMessageType.Error);
+        this.router.navigate(['/login']);
+    }
   }
 }
