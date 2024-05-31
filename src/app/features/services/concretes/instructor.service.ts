@@ -65,7 +65,7 @@ export class InstructorService extends InstructorBaseService {
     )
   }
   override getInstructorById(instructorId: string): Observable<GetbyidInstructorResponse> {
-    return this.httpClient.get<GetbyidInstructorResponse>(`${this.apiUrl}/`+instructorId);
+    return this.httpClient.get<GetbyidInstructorResponse>(`${this.apiUrl}/${instructorId}`);
   }
 
  

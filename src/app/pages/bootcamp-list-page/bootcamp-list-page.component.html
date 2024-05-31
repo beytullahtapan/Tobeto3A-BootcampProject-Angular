@@ -27,8 +27,8 @@
           <p class="text-gray-500 text-sm">{{ bootcamp.description }}</p>
         </div>
         <div class="px-6 py-3 flex flex-row items-center justify-between bg-gray-100">
-          <span routerLink="/viewbootcamp/{{ bootcamp.id }}" class="py-1 text-xs font-regular text-gray-900 mr-1 flex flex-row items-center">
-            <span class="ml-1">Eğitmen: {{ bootcamp.InsturctorName }}</span>
+          <span class="py-1 text-xs font-regular text-gray-900 mr-1 flex flex-row items-center">
+            <a [routerLink]="['/inst-profile', bootcamp.instructorId]">Eğitmen: {{ bootcamp.InsturctorName }}</a>
           </span>
           <span routerLink="/viewbootcamp/{{ bootcamp.id }}" class="py-1 text-xs font-regular text-gray-900 mr-1 flex flex-row items-center">
             <span class="py-1 text-xs font-regular text-gray-900 mr-1 flex flex-row items-center">
