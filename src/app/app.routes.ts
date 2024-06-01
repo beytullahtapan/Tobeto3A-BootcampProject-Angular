@@ -15,6 +15,7 @@ import { ProfileComponent } from './pages/profile/profile.component';
 import { AccountSettingsComponent } from './pages/account-settings/account-settings.component';
 import { ProfileSettingsComponent } from './pages/profile-settings/profile-settings/profile-settings.component';
 import { ViewbootcampComponent } from './pages/viewbootcamp/viewbootcamp.component';
+import { InstructorApplicationPageComponent } from './pages/instructor-application-page/instructor-application-page.component';
 import { MaintenanceComponent } from './pages/maintenance/maintenance.component';
 import { loginGuard } from './core/guards/login/login.guard';
 import { roleGuard } from './core/guards/role/role.guard';
@@ -37,7 +38,9 @@ export const routes: Routes = [
    {path:'account-setting',component:AccountSettingsComponent ,canActivate:[loginGuard]},
    {path:'profile-settings',component:ProfileSettingsComponent ,canActivate:[loginGuard]},
    {path:'viewbootcamp/:id',component:ViewbootcampComponent},
+   { path: 'inst-application', component: InstructorApplicationPageComponent, canDeactivate:[formConfirmExitGuard] },
    {path:'maintenance',component:MaintenanceComponent},
+
    //Admin
    { path: 'admin', canActivate:[roleGuard], data: {expectedRoles: [AuthRoleType.Admin]}, children: adminRoutes},
 
