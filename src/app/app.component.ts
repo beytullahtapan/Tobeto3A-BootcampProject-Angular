@@ -31,7 +31,7 @@ export class AppComponent implements OnInit {
 
   updateVisibility() {
     const path = this.router.url; 
-    this.ShowVisibility = !['/login', '/register'].includes(path) && !path.startsWith('/admin') && !path.startsWith('/instructor'); 
+    this.ShowVisibility = !['/login', '/register', '/inst-application'].includes(path) && !path.startsWith('/admin') && !path.startsWith('/instructor'); 
   }
   
 }

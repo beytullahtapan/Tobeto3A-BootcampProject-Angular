@@ -15,6 +15,7 @@ import { ProfileComponent } from './pages/profile/profile.component';
 import { AccountSettingsComponent } from './pages/account-settings/account-settings.component';
 import { ProfileSettingsComponent } from './pages/profile-settings/profile-settings/profile-settings.component';
 import { ViewbootcampComponent } from './pages/viewbootcamp/viewbootcamp.component';
+import { InstructorApplicationPageComponent } from './pages/instructor-application-page/instructor-application-page.component';
 
 
 
@@ -33,6 +34,7 @@ export const routes: Routes = [
    {path:'account-setting',component:AccountSettingsComponent},
    {path:'profile-settings',component:ProfileSettingsComponent},
    {path:'viewbootcamp/:id',component:ViewbootcampComponent},
+   { path: 'inst-application', component: InstructorApplicationPageComponent, canDeactivate:[formConfirmExitGuard] },
    //Admin
    { path: 'admin', children: adminRoutes },
    //Instructor
