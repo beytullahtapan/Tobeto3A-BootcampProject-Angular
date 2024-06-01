@@ -1,3 +1,4 @@
+
 <div class="grid grid-cols-1 sm:grid-cols-4 gap-10 mt-5">
   <div class="col-span-1">
     <div class="p-4 bg-white shadow-lg rounded">
@@ -37,15 +38,31 @@
             </span>
           </span>
         </div>
+
       </div>
     </div>
-    <div class="flex justify-between mt-4">
-      <button (click)="onPreviousPageClicked()" [disabled]="!bootcampList.hasPrevious" class="bg-blue-500 text-white px-4 py-2 rounded disabled:bg-gray-300">
-          Önceki
-      </button>
-      <button (click)="onViewMoreClicked()" [disabled]="!bootcampList.hasNext" class="bg-blue-500 text-white px-4 py-2 rounded disabled:bg-gray-300">
-          Sonraki
-      </button>
+    <div class="px-6 py-4 mb-auto">
+      <a routerLink="/viewbootcamp/{{ bootcamp.id }}" class="font-medium text-lg inline-block hover:text-indigo-600 transition duration-500 ease-in-out inline-block mb-2">{{ bootcamp.name }}</a>
+      <p class="text-gray-500 text-sm">{{ bootcamp.description }}</p>
+    </div>
+    <div class="px-6 py-3 flex flex-row items-center justify-between bg-gray-100">
+      <span class="py-1 text-xs font-regular text-gray-900 mr-1 flex flex-row items-center">
+        <a [routerLink]="['/inst-profile', bootcamp.instructorId]">Eğitmen: {{ bootcamp.instructorName }}</a>
+      </span>
+      <span class="py-1 text-xs font-regular text-gray-900 mr-1 flex flex-row items-center">
+        <span class="py-1 text-xs font-regular text-gray-900 mr-1 flex flex-row items-center">
+          <button *ngIf="!bootcamp.isRegistered" (click)="applyToBootcamp(bootcamp.id)" type="button" class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800 w-36">Başvur</button>
+          <span *ngIf="bootcamp.isRegistered" class="focus:outline-none text-white bg-gray-700 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-600 w-36 text-center">Kayıtlısınız</span>
+        </span>
+      </span>
     </div>
   </div>
+</div>
+<div class="flex justify-center mt-4">
+  <button (click)="onPreviousPageClicked()" [disabled]="!bootcampList.hasPrevious" class="bg-blue-500 text-white px-4 py-2 rounded disabled:bg-gray-300 mr-2">
+    Önceki
+  </button>
+  <button (click)="onViewMoreClicked()" [disabled]="!bootcampList.hasNext" class="bg-blue-500 text-white px-4 py-2 rounded disabled:bg-gray-300">
+    Sonraki
+  </button>
 </div>

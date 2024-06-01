@@ -8,6 +8,7 @@ import { AddInstructorLessonComponent } from './features/components/lesson/add/a
 import { ListInstructorLessonComponent } from './features/components/lesson/list/list.component';
 import { EditInstructorLessonComponent } from './features/components/lesson/edit/edit.component';
 import { InstructorContentComponent } from './features/components/lesson/content/content.component';
+import { InstructorStudentListComponent } from './features/components/student/list/list.component';
 
 export const instructorRoutes: Routes = [
     { path: "", component: InstructorComponent, children: [
@@ -19,6 +20,7 @@ export const instructorRoutes: Routes = [
         { path: "lesson/list/:id", component: ListInstructorLessonComponent },
         { path: "lesson/edit/:id", component: EditInstructorLessonComponent },
         { path: "lesson/content/:id", component: InstructorContentComponent },
+        { path: "student/list", component: InstructorStudentListComponent },
     ]},
  ];
  

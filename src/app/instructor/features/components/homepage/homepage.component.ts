@@ -7,6 +7,9 @@ import { AuthService } from '../../../../features/services/concretes/auth.servic
 import { GetBootcampCountResponse } from '../../models/responses/homepage/getbootcampcountresponse';
 import { HomepageService } from '../../services/concretes/homepage.service';
 import { GetBootcampCountRequest } from '../../models/requests/homepage/getbootcampcountrequest';
+import { UserService } from '../../../../features/services/concretes/user.service';
+import { StudentService } from '../../services/concretes/student.service';
+import { PageRequest } from '../../../../core/models/page-request';
 
 @Component({
   selector: 'instructorapp-homepage',
@@ -17,7 +20,12 @@ import { GetBootcampCountRequest } from '../../models/requests/homepage/getbootc
 })
 export class InstructorHomepageComponent implements OnInit{
   BootcampCount!: number;
-  constructor(private router: Router, private activatedRoute: ActivatedRoute, private homepageService: HomepageService, private authService: AuthService) {}
+  constructor(private router: Router, private activatedRoute: ActivatedRoute, private homepageService: HomepageService, private authService: AuthService,
+    private bootcampService: InstructorBootcamp,
+    private autService: AuthService,
+    private userService: UserService,
+    private studentService: StudentService
+  ) {}
 
   ngOnInit(): void {
     initFlowbite();
@@ -32,6 +40,5 @@ export class InstructorHomepageComponent implements OnInit{
         this.BootcampCount = response.count;
       }
     });
-  } 
-  
+  }   
 }

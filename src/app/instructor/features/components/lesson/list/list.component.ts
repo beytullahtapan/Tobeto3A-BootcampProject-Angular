@@ -57,13 +57,7 @@ export class ListInstructorLessonComponent implements OnInit {
     
     this.InstructorBootcampService.getBootcampById(bootcampId).subscribe(
       (bootcamp) => {
-        const request: ListLessonRequest = { 
-          BootcampId: bootcampId, 
-          pageIndex: pageRequest.page, 
-          pageSize: pageRequest.pageSize
-        };
-  
-        this.lessonService.getLessonlist(pageRequest, bootcampId).subscribe(
+          this.lessonService.getLessonlist(pageRequest, bootcampId).subscribe(
           (response: LessonListDto) => {
             if (response && response.items) {
               this.lessons = response.items.map((lesson) => {
