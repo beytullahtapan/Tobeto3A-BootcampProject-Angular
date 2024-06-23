@@ -1,0 +1,116 @@
+<section class="bg-white dark:bg-gray-900">
+    <div class="container px-6 py-24 mx-auto h-screen">
+        <div class="lg:flex lg:justify-center">
+            <div class="lg:w-1/2">
+                <h1 class="text-3xl font-bold text-gray-800 capitalize lg:text-3xl dark:text-white"><a routerLink="/">teach it free</a></h1>
+                <h1 class="mt-4 text-gray-600 dark:text-gray-300 md:text-lg">Apply to become an Instructor</h1>
+            </div>
+
+            <div class="mt-8 lg:w-1/2 lg:mt-0">
+                <form [formGroup]="instructorApplicationForm" class="w-full lg:max-w-xl">
+                    <div class="grid gap-4 sm:grid-cols-2">
+                        <div class="relative flex items-center">
+                            <span class="absolute left-3">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-gray-300 dark:text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                                </svg>
+                            </span>
+                            <input 
+                                formControlName="firstName"
+                                type="text" 
+                                class="block w-full py-3 pl-10 text-gray-700 bg-white border rounded-lg dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring focus:ring-blue-300 focus:outline-none focus:ring-opacity-40" 
+                                placeholder="Firstname">
+                        </div>
+                        <div class="relative flex items-center">
+                            <span class="absolute left-3">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-gray-300 dark:text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                                </svg>
+                            </span>
+                            <input 
+                                formControlName="lastName"
+                                type="text" 
+                                class="block w-full py-3 pl-10 text-gray-700 bg-white border rounded-lg dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring focus:ring-blue-300 focus:outline-none focus:ring-opacity-40" 
+                                placeholder="Lastname">
+                        </div>
+                        <div class="relative flex items-center sm:col-span-2">
+                            <span class="absolute left-3">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-gray-300 dark:text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                                </svg>
+                            </span>
+                            <input 
+                                formControlName="email"
+                                type="email" 
+                                class="block w-full py-3 pl-10 text-gray-700 bg-white border rounded-lg dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring focus:ring-blue-300 focus:outline-none focus:ring-opacity-40" 
+                                placeholder="Email address">
+                        </div>
+                        <div class="relative flex items-center">
+                            <span class="absolute left-3">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-gray-300 dark:text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                                </svg>
+                            </span>
+                            <input
+                                formControlName="nationalIdentity"
+                                type="text"
+                                class="block w-full py-3 pl-10 text-gray-700 bg-white border rounded-lg dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring focus:ring-blue-300 focus:outline-none focus:ring-opacity-40" 
+                                placeholder="National Identity">
+                        </div>
+                        <div class="relative flex items-center">
+                            <span class="absolute left-3">
+                                <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" 
+                                aria-hidden="true" xmlns="http://www.w3.org/2000/svg" 
+                                fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z"/>
+                                </svg>
+                            </span>
+                            <input
+                                formControlName="dateOfBirth"
+                                type="date"
+                                class="block w-full py-3 pl-10 text-gray-700 bg-white border rounded-lg dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring focus:ring-blue-300 focus:outline-none focus:ring-opacity-40" 
+                                placeholder="Date Of Birth">
+                        </div>
+                        <div class="relative flex items-center sm:col-span-2">
+                            <span class="absolute left-3">
+                                <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                                    <path fill="currentColor" d="M8 1V0v1Zm4 0V0v1Zm2 4v1h1V5h-1ZM6 5H5v1h1V5Zm2-3h4V0H8v2Zm4 0a1 1 0 0 1 .707.293L14.121.879A3 3 0 0 0 12 0v2Zm.707.293A1 1 0 0 1 13 3h2a3 3 0 0 0-.879-2.121l-1.414 1.414ZM13 3v2h2V3h-2Zm1 1H6v2h8V4ZM7 5V3H5v2h2Zm0-2a1 1 0 0 1 .293-.707L5.879.879A3 3 0 0 0 5 3h2Zm.293-.707A1 1 0 0 1 8 2V0a3 3 0 0 0-2.121.879l1.414 1.414ZM2 6h16V4H2v2Zm16 0h2a2 2 0 0 0-2-2v2Zm0 0v12h2V6h-2Zm0 12v2a2 2 0 0 0 2-2h-2Zm0 0H2v2h16v-2ZM2 18H0a2 2 0 0 0 2 2v-2Zm0 0V6H0v12h2ZM2 6V4a2 2 0 0 0-2 2h2Zm16.293 3.293C16.557 11.029 13.366 12 10 12c-3.366 0-6.557-.97-8.293-2.707L.293 10.707C2.557 12.971 6.366 14 10 14c3.634 0 7.444-1.03 9.707-3.293l-1.414-1.414ZM10 9v2a2 2 0 0 0 2-2h-2Zm0 0H8a2 2 0 0 0 2 2V9Zm0 0V7a2 2 0 0 0-2 2h2Zm0 0h2a2 2 0 0 0-2-2v2Z"/>
+                                </svg>
+                            </span>
+                            <input
+                                formControlName="companyName"
+                                type="text"
+                                class="block w-full py-3 pl-10 text-gray-700 bg-white border rounded-lg dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring focus:ring-blue-300 focus:outline-none focus:ring-opacity-40" 
+                                placeholder="Company Name">
+                        </div>
+                        <div class="relative flex items-center sm:col-span-2">
+                            <span class="absolute left-3">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-gray-300 dark:text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                                </svg>
+                            </span>
+                            <input
+                                formControlName="additionalInformation"
+                                type="text"
+                                class="block w-full py-3 pl-10 text-gray-700 bg-white border rounded-lg dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring focus:ring-blue-300 focus:outline-none focus:ring-opacity-40" 
+                                placeholder="Additional Information">
+                        </div>
+                        <button (click)="apply()"
+                            type="submit"
+                            class="w-full py-3 mt-4 text-white bg-blue-600 rounded-lg hover:bg-blue-500 focus:outline-none focus:bg-blue-500">
+                            Submit Application
+                        </button>
+                    </div>
+                    <div class="mt-8 md:flex md:items-center md:justify-between">
+                        <a routerLink="/login" class="text-sm text-blue-500 hover:underline dark:text-blue-400">
+                            Already have an account? Login
+                        </a>
+                        <a routerLink="/" class="mt-4 md:mt-0 text-sm font-medium text-blue-500 transition-colors duration-300 transform hover:text-blue-400 focus:outline-none focus:underline">
+                            Return to Home
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
