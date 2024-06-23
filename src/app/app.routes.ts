@@ -19,6 +19,7 @@ import { MaintenanceComponent } from './pages/maintenance/maintenance.component'
 import { loginGuard } from './core/guards/login/login.guard';
 import { roleGuard } from './core/guards/role/role.guard';
 import { AuthRoleType } from './features/constants/auth-role-type';
+import { BootcampdetailsComponent } from './pages/bootcampdetails/bootcampdetails.component';
 
 
 
@@ -37,6 +38,7 @@ export const routes: Routes = [
    {path:'account-setting',component:AccountSettingsComponent ,canActivate:[loginGuard]},
    {path:'profile-settings',component:ProfileSettingsComponent ,canActivate:[loginGuard]},
    {path:'viewbootcamp/:id',component:ViewbootcampComponent},
+   {path:'bootcampdetails/:id',component:BootcampdetailsComponent},
    {path:'maintenance',component:MaintenanceComponent},
    //Admin
    { path: 'admin', canActivate:[roleGuard], data: {expectedRoles: [AuthRoleType.Admin]}, children: adminRoutes},

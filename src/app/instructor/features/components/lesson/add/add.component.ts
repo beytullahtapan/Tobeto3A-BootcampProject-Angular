@@ -75,7 +75,7 @@ export class AddInstructorLessonComponent implements OnInit {
 
           let addLessonContentRequest: AddLessonContentRequest = {
             text: 'İçerik Buraya Gelcek',
-            videoUrl: 'Video Linki Buraya gelecek',
+            videoUrl: 'https://www.youtube.com/watch?v=2EkMrrX9sYY',
             lessonId: lessonId
           };
 

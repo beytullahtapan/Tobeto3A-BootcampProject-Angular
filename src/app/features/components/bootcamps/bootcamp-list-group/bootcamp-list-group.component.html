@@ -1,51 +1,15 @@
 <div class="max-w-screen-xl mx-auto p-5 sm:p-10 md:p-16">
-        <div class="text-center mb-5">
-            <h1 class="mb-4 text-3xl font-extrabold text-gray-900 dark:text-black md:text-5xl lg:text-6xl">Son Eklenen
-                <span class="text-transparent bg-clip-text bg-gradient-to-r to-emerald-600 from-sky-400">3 Kurs.</span>
-            </h1>
-        </div>
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-10">
-            <div *ngFor="let bootcamp of bootcamps" class="rounded overflow-hidden shadow-lg flex flex-col">
-              <a routerLink="/viewbootcamp/{{ bootcamp.id }}"></a>
-              <div class="relative">
-                <a routerLink="/viewbootcamp/{{ bootcamp.id }}">
-                  <img class="w-full h-48 object-cover" [src]="bootcamp.bootcampImage + '?auto=compress&cs=tinysrgb&dpr=1&w=500'" alt="Bootcamp Image">
-                  <div class="hover:bg-transparent transition duration-300 absolute bottom-0 top-0 right-0 left-0 bg-gray-900 opacity-25"></div>
-                </a>
-                <div 
-                  [ngClass]="{
-                    'bg-indigo-600 text-white': bootcamp.bootcampState,
-                    'bg-red-600 text-white': !bootcamp.bootcampState
-                  }"
-                  class="text-xs absolute top-0 right-0 px-4 py-2 mt-3 mr-3 hover:bg-white hover:text-indigo-600 transition duration-500 ease-in-out">
-                  Başvuru Durumu: {{ bootcamp.bootcampState ? 'Aktif' : 'Pasif' }}
-                </div>
-              </div>
-              <div class="px-6 py-4 mb-auto">
-                <a routerLink="/viewbootcamp/{{ bootcamp.id }}"class="font-medium text-lg inline-block hover:text-indigo-600 transition duration-500 ease-in-out inline-block mb-2">{{ bootcamp.name }}</a>
-                <p class="text-gray-500 text-sm">{{ bootcamp.description }}</p>
-              </div>
-              <div class="px-6 py-3 flex flex-row items-center justify-between bg-gray-100">
-                <span class="py-1 text-xs font-regular text-gray-900 mr-1 flex flex-row items-center">
-                  <a [routerLink]="['/inst-profile', bootcamp.instructorId]">Eğitmen: {{ bootcamp.instructorName }}</a>
-                </span>
-                <span routerLink="/viewbootcamp/{{ bootcamp.id }}" class="py-1 text-xs font-regular text-gray-900 mr-1 flex flex-row items-center">
-                  <span class="py-1 text-xs font-regular text-gray-900 mr-1 flex flex-row items-center">
-                    <button *ngIf="!bootcamp.isRegistered" (click)="applyToBootcamp(bootcamp.id)" type="button" class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800 w-36">Başvur</button>
-                    <span *ngIf="bootcamp.isRegistered" class="focus:outline-none text-white bg-gray-700 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-600 w-36 text-center">Kayıtlısınız</span>
-                  </span>
-                </span>
-              </div>
-            </div>
-          </div>
-        <div class="border-b mt-5 text-center text-sm">
-            <div class="text-indigo-600  flex items-center pb-2 pr-2 border-b-2 border-indigo-600 uppercase">
-                <a  routerLink="/bootcamps"
-                    class="mx-auto bg-indigo-600 text-white px-6 py-3 rounded-md hover:bg-indigo-700 transition duration-300 ease-in-out">Hepsini
-                    Gör</a>
-            </div>
-        </div>
-
+  <div class="text-center mb-5">
+    <h1 class="mb-4 text-3xl font-extrabold text-gray-900 dark:text-black md:text-5xl lg:text-6xl">Son Eklenen
+      <span class="text-transparent bg-clip-text bg-gradient-to-r to-emerald-600 from-sky-400">3 Kurs.</span>
+    </h1>
+  </div>
+  <div class="grid grid-cols-1 sm:grid-cols-3 gap-10">
+    <app-bootcamp-card *ngFor="let bootcamp of bootcampList.items" [bootcampCardData]="bootcamp"></app-bootcamp-card>
+  </div>
+  <div class="border-b mt-5 text-center text-sm">
+    <div class="text-indigo-600  flex items-center pb-2 pr-2 border-b-2 border-indigo-600 uppercase">
+      <a routerLink="/bootcamps" class="mx-auto bg-indigo-600 text-white px-6 py-3 rounded-md hover:bg-indigo-700 transition duration-300 ease-in-out">Hepsini Gör</a>
     </div>
-
-
+  </div>
+</div>
