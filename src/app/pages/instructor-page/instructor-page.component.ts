@@ -66,8 +66,7 @@ export class InstructorPageComponent {
           response.items.forEach(bootcamp => {
             this.userService.userinfo({ ıd: bootcamp.instructorId }).subscribe(
               (userInfoResponse) => {
-                bootcamp.instructorFirstName = userInfoResponse.firstName
-                bootcamp.instructorLastName = userInfoResponse.lastName;
+                bootcamp.instructorName = `${userInfoResponse.firstName} ${userInfoResponse.lastName}`;
               },
               (error) => {
                 console.error('Error fetching user info', error);

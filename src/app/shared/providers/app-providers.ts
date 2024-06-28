@@ -12,6 +12,8 @@ import { LoggingInterceptor } from "../../core/interceptors/logging/log.intercep
 import { ChatBaseService } from "../../features/services/abstracts/chat-base.service";
 import { ChatService } from "../../features/services/concretes/chat.service";
 import { ChatHubService } from "../../features/services/concretes/chat-hub.service";
+import { InstructorApplicationService } from "../../features/services/concretes/instructor-application.service";
+import { InstructorApplicationBaseService } from "../../features/services/abstracts/instructor-application-base.service";
 
 export function getAppProviders(){
     const authServiceProviders={
@@ -24,10 +26,16 @@ export function getAppProviders(){
         useClass:ChatService
     };
 
+    const instructorApplicationServiceProviders={
+        provide:InstructorApplicationBaseService,
+        useClass:InstructorApplicationService
+    };
+
 
     return [
         authServiceProviders,
         chatServiceProviders,
+        instructorApplicationServiceProviders,
         ChatHubService,
         provideAnimationsAsync(), // required animations providers
         provideToastr(), //Toastr providers

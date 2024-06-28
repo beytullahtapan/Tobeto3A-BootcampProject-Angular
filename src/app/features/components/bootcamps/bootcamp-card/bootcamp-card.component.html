@@ -18,26 +18,23 @@
         </a>
     </div>
     <div class="text-white dark:text-gray-900 px-6 py-4 mb-auto">
-        <a href="#"
+        <a [routerLink]="['/bootcampdetails', bootcampCardData.id]"
             class="font-medium text-lg inline-block hover:text-indigo-600 transition duration-500 ease-in-out inline-block mb-2">{{bootcampCardData.name}}</a>
         <p class="text-gray-500 text-sm">
-            C# İnceliklerini Öğrenecek ve istediğiniz projeyi geliştirebileceksiniz.
+            {{bootcampCardData.description}}
         </p>
     </div>
     <div class="px-6 py-3 flex flex-row items-center justify-between bg-gray-100">
         <span href="#"
             class="py-1 text-xs font-regular text-gray-900 mr-1 flex flex-row items-center">
-            <a [routerLink]="['/inst-profile', bootcampCardData.instructorId]">Egitmen: {{bootcampCardData.instructorFirstName}} {{bootcampCardData.instructorLastName}}</a>
+            <a [routerLink]="['/inst-profile', bootcampCardData.instructorId]">Egitmen: {{bootcampCardData.instructorName}}</a>
         </span>
 
-        <span href="#"
-            class="py-1 text-xs font-regular text-gray-900 mr-1 flex flex-row items-center">
-            <svg class="h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z">
-                </path>
-            </svg>
-            <span class="ml-1">12 Comments</span>
-        </span>
+        <span [routerLink]="['/bootcampdetails', bootcampCardData.id]" class="py-1 text-xs font-regular text-gray-900 mr-1 flex flex-row items-center">
+            <span class="py-1 text-xs font-regular text-gray-900 mr-1 flex flex-row items-center">
+              <button *ngIf="!bootcampCardData.isRegistered"  type="button" class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800 w-36">Detay</button>
+              <span *ngIf="bootcampCardData.isRegistered" class="focus:outline-none text-white bg-gray-700 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-600 w-36 text-center">Kayıtlısınız</span>
+            </span>
+          </span>
     </div>
 </div>

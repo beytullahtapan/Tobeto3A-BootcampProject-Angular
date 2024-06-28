@@ -6,9 +6,12 @@ import { ListBootcampResponse } from "../../../instructor/features/models/respon
 import { ListBootcampRequest } from "../../models/requests/bootcamp/get-bootcamp-request";
 import { BootcampApplicationResponse } from "../../models/responses/bootcampapplication/bootcamp-application-response";
 import { BootcampApplicationRequest } from "../../models/requests/bootcampapplication/bootcamp-application-request";
+import { CheckRegisteredRequest } from "../../models/requests/bootcampapplication/check-registered-request";
+import { CheckRegisteredResponse } from "../../models/responses/bootcampapplication/check-registered-response";
 
 @Injectable()
 export abstract class BootcampApplicationBaseService{
     abstract apply(bootcampApplicationRequest:BootcampApplicationRequest):Observable<BootcampApplicationResponse>;
+    abstract CheckRegistered(checkRegisteredRequest: CheckRegisteredRequest):Observable<Boolean>;
     abstract CheckBootcamp(BootcampId: Number):Observable<BootcampApplicationResponse>;
 }

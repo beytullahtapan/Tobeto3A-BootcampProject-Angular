@@ -4,19 +4,22 @@ import { UserService } from '../../features/services/concretes/user.service';
 import { BootcampItem } from '../../features/models/responses/bootcamp/get-bootcamps-response';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { BootcampListDto } from '../../features/models/responses/bootcamp/bootcamp-list-item-dto';
 import { PageRequest } from '../../core/models/page-request';
 import { BootcampApplicationRequest } from '../../features/models/requests/bootcampapplication/bootcamp-application-request';
 import { AuthService } from '../../features/services/concretes/auth.service';
 import { BootcampApplicationService } from '../../features/services/concretes/bootcampApplication.service';
+import { AppToastrService, ToastrMessageType } from '../../features/services/concretes/app-toastr.service';
+import { BootcampCardComponent } from '../../features/components/bootcamps/bootcamp-card/bootcamp-card.component';
+import { BootcampListService } from '../../features/services/concretes/bootcamplist.service';
 
 @Component({
   selector: 'app-bootcamp-list-page',
   standalone: true,
   templateUrl: './bootcamp-list-page.component.html',
   styleUrls: ['./bootcamp-list-page.component.scss'],
-  imports: [FormsModule, CommonModule, RouterModule]
+  imports: [FormsModule, CommonModule, RouterModule,BootcampCardComponent]
 })
 export class BootcampListPageComponent implements OnInit {
   bootcamps: BootcampItem[] | any = null; 
@@ -33,13 +36,10 @@ export class BootcampListPageComponent implements OnInit {
   }; 
 
   constructor(
-    private bootcampService: BootcampService,
-    private userService: UserService,
-    private authService: AuthService,
-    private bootcampApplicationService: BootcampApplicationService
+    private bootcampListService: BootcampListService,
   ) { }
 
-  readonly PAGE_SIZE = 5;
+  readonly PAGE_SIZE = 10;
 
   ngOnInit(): void {
     this.loadBootcamps({ page: 0, pageSize: this.PAGE_SIZE });
@@ -48,45 +48,18 @@ export class BootcampListPageComponent implements OnInit {
 
 
   loadBootcamps(pageRequest: PageRequest): void {
-    this.bootcampService.getList(pageRequest).subscribe(
-      (response: BootcampListDto) => {
-        if (response && response.items) {
-          const bootcampItems = response.items.map(bootcamp => {
-            this.userService.userinfo({ ıd: bootcamp.instructorId }).subscribe(
-              (userInfoResponse) => {
-                bootcamp.instructorName = `${userInfoResponse.firstName} ${userInfoResponse.lastName}`;
-              },
-              (error) => {
-                console.error('Error fetching user info', error);
-              }
-            );
-            if(this.authService.loggedIn())
-            {
-              const applicantId = this.authService.getCurrentUserId();
-              this.bootcampApplicationService.CheckBootcamp(bootcamp.id).subscribe(
-                (checkResponse) => {
-                  bootcamp.isRegistered = checkResponse.applicantId === applicantId;
-                },
-                (error) => {
-                  console.error('Error checking bootcamp registration', error);
-                  bootcamp.isRegistered = false;
-                }
-              );
-            }
-            return bootcamp;
-          });
-
-          this.bootcamps = bootcampItems;
-          this.bootcampList = response;
-        } else {
-          console.error('Response or items array is null.');
-        }
+    this.bootcampListService.loadBootcamps(pageRequest).subscribe(
+      (response) => {
+        this.bootcampList = response;
       },
       (error) => {
-        this.error = error;
-        console.error('Error fetching bootcamps', error);
+        console.error('Error loading bootcamps', error);
       }
     );
+  }
+
+  applyToBootcamp(bootcampId: number): void {
+    this.bootcampListService.applyToBootcamp(bootcampId);
   }
   
   
@@ -108,16 +81,5 @@ export class BootcampListPageComponent implements OnInit {
     this.currentPageNumber = this.bootcampList.index + 1;
   }   
 
-  applyToBootcamp(bootcampId: number): void {
-    const applicantId = this.authService.getCurrentUserId();
-    const applicationRequest: BootcampApplicationRequest = { bootcampId, applicantId };
-    this.bootcampApplicationService.apply(applicationRequest).subscribe(
-      (response) => {
-        console.log('Başvuru başarılı', response);
-      },
-      (error) => {
-        console.error('Başvuru hatası', error);
-      }
-    );
-  }
+  
 }
